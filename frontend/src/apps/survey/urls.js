@@ -15,6 +15,12 @@ export default [{
             props: true
         },
         {
+            path: '/:lang/dashboard/:id',
+            name: 'survey_dashboard',
+            component: () => import('@/apps/survey/views/SurveyDashboard.vue'),
+            props: true
+        },
+        {
             path: '/:lang/public/:id',
             name: 'survey_public',
             component: () => import('@/apps/survey/views/SurveyPublic.vue'),

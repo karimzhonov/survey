@@ -19,7 +19,7 @@ export default {
                 username, password
             })
             context.commit('basic', {key: 'token', value: response.data.access})
-            await router.push({name: 'home'})
+            await router.push({name: 'survey_list'})
             return response.data
         },
         async refresh_token(context, refresh_token) {

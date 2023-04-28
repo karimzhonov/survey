@@ -24,7 +24,7 @@ class SurveyResultView(ModelViewSet):
     serializer_class = SurveyPublicResultSerializer
 
     def get_queryset(self):
-        return SurveyResult.objects.filter(survey_id=self.kwargs.get("survey_id"), user=self.request.user)
+        return SurveyResult.objects.filter(survey_id=self.kwargs.get("survey_id"), survey__user=self.request.user)
 
 
 class SurveyPublicView(RetrieveAPIView):

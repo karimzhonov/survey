@@ -57,7 +57,7 @@ export default {
       async save_survey(data) {        
         const rdata = {data}
         if (data.title) {
-          rdata.name = data.default
+          rdata.name = data.title.default ?? (typeof data.title === "string" ? data.title : Object.values(data.title)[0])
         }
         await $survey.patch(this.id, rdata)
       }

@@ -4,7 +4,7 @@ from . import views
 
 router = DefaultRouter()
 router.register("survey", views.SurveyView, "")
-router.register("survey-result", views.SurveyResultView, "")
+router.register("survey/(?P<survey_id>[0-9A-Fa-f-]+)/result", views.SurveyResultView, "")
 
 urlpatterns = [
     path("", include(router.urls)),

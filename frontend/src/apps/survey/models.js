@@ -2,9 +2,9 @@ import { CRUD } from "@/utils";
 import axios from "@/plugins/axios";
 
 export class SurveyResult extends CRUD {
-    constructor() {
-        super()
-        this.base_url = "/api/survey/survey-result/"
+    constructor(kwargs) {
+        super(kwargs)
+        this.base_url = "/api/survey/survey/{survey_id}/result/"
     }
 
     async post_public(data, params) {

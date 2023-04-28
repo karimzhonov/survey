@@ -24,8 +24,8 @@ export default {
             context.commit('append_message', {
                 severity: type_list[message.type],
                 closable: true,
-                icon: icon_list[message.type],
-                content: message
+                icon: context.state.message_icon_list[message.type],
+                content: message.message
             })
         },
         async add_message(context, messages) {

@@ -22,12 +22,14 @@
     "chart.js": "^4.1.1",
     "core-js": "^3.8.3",
     "export-from-json": "^1.7.0",
+    "jspdf": "^2.5.1",
     "knockout": "^3.5.1",
     "leaflet": "^1.9.3",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",
     "primevue": "^3.21.0",
     "register-service-worker": "^1.7.2",
+    "survey-analytics": "^1.9.85",
     "survey-creator-knockout": "^1.9.85",
     "survey-knockout-ui": "^1.9.85",
     "survey-vue": "^1.9.85",
@@ -40,7 +42,8 @@
     "vue-speedometer": "^2.0.0",
     "vue3-apexcharts": "^1.4.1",
     "vue3-html2pdf": "^1.1.2",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

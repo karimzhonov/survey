@@ -8,7 +8,6 @@ import "survey-core/survey.i18n";
 import { applyBindings } from "knockout";
 import { SurveyModel } from "survey-knockout-ui";
 import 'survey-core/defaultV2.min.css';
-import store from "@/store";
 import {Survey} from "@/apps/survey/models"
 const $survey = new Survey()
 
