@@ -5,9 +5,9 @@ from . import models
 
 @admin.register(models.Survey)
 class SurveyAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ["status"]
 
 
 @admin.register(models.SurveyResult)
-class SurveyResultAdmin(models.SurveyResult):
-    pass
+class SurveyResultAdmin(admin.ModelAdmin):
+    list_filter = ["survey"]
