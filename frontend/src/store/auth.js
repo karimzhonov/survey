@@ -1,5 +1,4 @@
 import axios from "@/plugins/axios";
-import router from "@/router";
 
 export default {
     state: {
@@ -19,7 +18,6 @@ export default {
                 username, password
             })
             context.commit('basic', {key: 'token', value: response.data.access})
-            await router.push({name: 'survey_list'})
             return response.data
         },
         async refresh_token(context, refresh_token) {
@@ -28,7 +26,7 @@ export default {
                 context.commit('basic', {key: 'token', value: r.data.access})
                 localStorage.setItem('access', r.data.access)
             } catch (e) {
-                await router.push({name: 'login'})
+                await axios.go_to_login()
                 throw e
             }
         }

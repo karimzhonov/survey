@@ -16,7 +16,6 @@ import "tabulator-tables/dist/css/tabulator.min.css";
 import "survey-analytics/survey.analytics.tabulator.css";
 import 'survey-analytics/survey.analytics.min.css';
 import {SurveyResult, Survey} from "../models"
-import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 import { Model } from 'survey-core';
 import { VisualizationPanel, localization } from 'survey-analytics';
@@ -25,7 +24,7 @@ const $survey = new Survey()
 const vizPanelOptions = {
   allowHideQuestions: true,
 }
-window.jsPDF = jsPDF;
+
 window.XLSX = XLSX;
 
 export default {

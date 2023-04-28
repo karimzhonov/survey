@@ -1,11 +1,14 @@
 <script setup>
 import { ref, computed } from 'vue';
+import { useRoute } from 'vue-router';
 import store from '@/store';
 import logo_dark from "@/assets/images/Dark.png"
 import logo_light from "@/assets/images/Light (1).png"
 import navbar_icon_2_dark from '@/assets/images/city_light.svg'
 import logo_rpatm_light from "@/assets/images/Group 332.4785d398.svg"
 import logo_panel from "@/assets/images/Безымянный-1.svg"
+import router from '@/router';
+
 const username = ref('');
 const password = ref('');
 const darkMode = computed(() => store.state.darkMode)
@@ -24,6 +27,13 @@ const login = async () => {
     })
     localStorage.setItem('access', response.access)
     localStorage.setItem('refresh', response.refresh)
+    const search = new URLSearchParams(window.location.search)
+    console.log(search.get("next"));
+    if (search.get("next")) {
+        window.location.href = search.get("next")
+    } else {
+        await router.push({name: 'survey_list'})
+    }
 }
 
 </script>

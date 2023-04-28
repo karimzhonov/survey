@@ -74,15 +74,19 @@
             <Calendar id="calendar-24h" v-model="survey.start_date" showTime hourFormat="24" dateFormat="dd.mm.yy"/>
         </div>
         <div class="field">
-            <label for="name">{{ $t("Дата начало") }}</label>
+            <label for="name">{{ $t("Дата конец") }}</label>
             <Calendar id="calendar-24h" v-model="survey.end_date" showTime hourFormat="24" dateFormat="dd.mm.yy"/>
         </div>
 
         <div class="field">
-            <label for="name">{{ $t("Дата начало") }}</label>
+            <label for="name">{{ $t("Статус") }}</label>
             <Dropdown v-model="survey.status" :options="status_dropdown" :placeholder="$t('Выберите статус')" class="w-full md:w-14rem" />
         </div>
 
+        <div class="field flex align-center">
+            <label class="mr-2" for="name">{{ $t("Авторизованные") }}</label>
+            <Checkbox v-model="survey.need_auth" :binary="true" />
+        </div>
         
         <template #footer>
             <div class="mt-3">

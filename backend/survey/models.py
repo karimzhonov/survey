@@ -26,6 +26,7 @@ class Survey(models.Model):
     status = models.CharField(default=STATUS_DRAFT, choices=STATUS, max_length=20)
     start_date = models.DateTimeField(default=timezone.now)
     end_date = models.DateTimeField(blank=True, null=True)
+    need_auth = models.BooleanField(default=False)
 
 
 class SurveyResult(models.Model):

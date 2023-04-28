@@ -21,14 +21,18 @@ export default {
             }
         }
     },
+    async go_to_login() {
+        router.push({name: 'login', query: {next: window.location.href}})
+    },
     async raise_error(response) {
         if (response.status === 401) {
             if (localStorage.getItem('refresh')) {
                 await store.dispatch('refresh_token', localStorage.getItem('refresh'))
                 return
             }
+            console.log(window.location);
             if (document.referrer !== 'https://panel.tashkent.uz/') {
-                await router.push({name: 'login'})
+                await this.go_to_login()
             }
         } else if (response.status === 400) {
             await this.raise_error_400(response.data)
