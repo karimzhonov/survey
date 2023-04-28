@@ -24,7 +24,7 @@ body::-webkit-scrollbar{
 a {
   text-decoration: none !important;
 }
-p, h1, h2, h3, h4, h5, h6 {
+p, h1, h2, h3, h4, h5, h6, .sd-body--empty {
   color: var(--surface-900);
   font-family: 'Open Sans', sans-serif;
 }

@@ -15,22 +15,6 @@ services:
     volumes:
       - ./backend/:/app/
 
-  survey_redis:
-    container_name: survey_redis
-    image: redis:alpine
-
-  survey_celery:
-    container_name: survey_celery
-    build: ./backend/
-    command: celery -A backend worker -l info
-    restart: always
-    env_file:
-      - ./backend/.env
-    depends_on:
-      - survey_redis
-    volumes:
-      - ./backend/:/app/
-
   survey_front:
     container_name: survey_front
     build: ./frontend
