@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import RetrieveAPIView, CreateAPIView
-from .serializers import SurveyShowSerializer, SurveyCreateSerializer, SurveyPublicResultSerializer
+from .serializers import SurveyShowSerializer, SurveyCreateSerializer, SurveyPublicResultSerializer, SurveyListSerializer
 from ..models import Survey, SurveyResult
 
 
@@ -10,8 +10,10 @@ class SurveyView(ModelViewSet):
         return Survey.objects.filter(user=self.request.user)
 
     def get_serializer_class(self):
-        if self.action in ["list", 'retrieve']:
+        if self.action in ['retrieve']:
             return SurveyShowSerializer
+        if self.action in ['list']:
+            return SurveyListSerializer
         return SurveyCreateSerializer
     
     def create(self, request, *args, **kwargs):

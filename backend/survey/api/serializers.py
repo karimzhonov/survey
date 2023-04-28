@@ -10,6 +10,13 @@ class SurveyShowSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class SurveyListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Survey
+        exclude = ['data']
+
+
 class SurveyCreateSerializer(serializers.ModelSerializer):
 
     class Meta:

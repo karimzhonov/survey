@@ -221,7 +221,7 @@ REST_FRAMEWORK = {
         "rest_framework.filters.SearchFilter",
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-    'DATETIME_FORMAT': "%d.%m.%Y %H:%M:%S",
+    'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S",
 }
 
 REST_PANDAS = {
