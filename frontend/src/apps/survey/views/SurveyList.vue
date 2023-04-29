@@ -45,7 +45,7 @@
                         <Button class="p-button p-button-secondary ml-2" icon="pi pi-cog" @click="survey = slotProps.data; surveyDiolog = true" />
                         <Button class="p-button p-button-help ml-2" icon="pi pi-pencil" @click="async () => await row_click(slotProps.data.id)" />
                         <Button class="p-button p-button-success ml-2" icon="pi pi-chart-line" @click="$router.push({name: 'survey_dashboard', params: {id: slotProps.data.id}})" />
-                        <Button class="p-button p-button-danger ml-2" icon="pi pi-trash" @click="deleteSurveysDialog = true;survey=slotProps.data" />
+                        <Button class="p-button p-button-danger ml-2" icon="pi pi-trash" @click="deleteSurveysDialog = true; survey=slotProps.data" />
                     </div>
                 </template>
             </Column>
