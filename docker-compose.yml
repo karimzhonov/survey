@@ -26,7 +26,7 @@ services:
     container_name: survey_front
     build: ./frontend
     ports:
-      - 8080:8080
+      - 8081:8081
     command: sh -c "npm run serve"
     restart: always
     env_file:

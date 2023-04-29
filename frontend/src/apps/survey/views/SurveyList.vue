@@ -141,10 +141,10 @@ export default {
         async open_survey_public(id) {
             let url = this.$router.resolve({name: 'survey_public', params: {id}}).href
             url = [location.origin, url].join("")
-            await navigator.clipboard.writeText(url);
-            const message = "Ссылка скопирование"
-            store.dispatch("add_message", {message, type: 4})
-            setTimeout(() => window.open(url, "_blank"), 3000)
+            // await navigator.clipboard.writeText(url);
+            // const message = "Ссылка скопирование"
+            // store.dispatch("add_message", {message, type: 4})
+            window.open(url, "_blank")
             
         },
         async save_survey(){
