@@ -25,16 +25,11 @@ services:
   survey_front:
     container_name: survey_front
     build: ./frontend
-    ports:
-      - 8080:8080
-    command: sh -c "npm run serve"
-    restart: always
     env_file:
       - ./frontend/.env
-    depends_on:
-      - survey_web
     volumes:
       - ./frontend/:/app/
+    command: npm run build
 
 volumes:
   survey_db:
