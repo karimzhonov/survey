@@ -33,7 +33,7 @@ import * as XLSX from "xlsx";
 import { Model } from 'survey-core';
 import { VisualizationPanel, localization } from 'survey-analytics';
 import * as SurveyAnalyticsTabulator from "survey-analytics/survey.analytics.tabulator";
-import store from "@/store";
+
 const $survey = new Survey()
 const vizPanelOptions = {
   allowHideQuestions: true,
@@ -67,6 +67,7 @@ export default {
     methods: {
         async change_dates(e) {
             if (e[1]) {
+                this.loading = true
                 const $survey_result = new SurveyResult({survey_id: this.id})
                 this.results_params = {...this.results_params, ...this.dates_to_iso_dict(e)}
                 const results = await $survey_result.list(this.results_params)

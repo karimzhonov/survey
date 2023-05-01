@@ -17,7 +17,7 @@ import { SurveyModel } from "survey-knockout-ui";
 import 'survey-core/defaultV2.min.css';
 import {Survey, SurveyPublicResult} from "@/apps/survey/models"
 import {survey_locale_uz_cl} from "@/locale"
-import store from "@/store";
+
 surveyLocalization.locales["uz-cl"] = survey_locale_uz_cl
 const $survey = new Survey()
 
@@ -41,8 +41,8 @@ export default {
     if (this.survey_active) {
       const survey = new SurveyModel(survey_response.data);
       survey.onComplete.add((sender, options) => {
-          this.ended = true
-          this.save_survey(sender.data)
+        options.showDataSaving()
+        this.save_survey(sender.data, options)
       })
       surveyLocalization.currentLocale = this.$i18n.locale
       survey.locale = this.$i18n.locale
@@ -53,15 +53,16 @@ export default {
     }
   },
   methods:{
-    async save_survey(data){
-      try{
+    async save_survey(data, options){
+      try {
         const $result = new SurveyPublicResult({survey_id: this.id})
         await $result.post({"survey": this.id, data})
+        this.ended = true
+        options.showDataSavingSuccess()
       } catch (e) {
-        const message = "При отправки результатов возникла ошибка"
-        store.dispatch("add_message", {message: this.$t(message), type: 1})
+        options.showDataSavingError()   
       }
-
+        
     },
     async start_again() {
       window.location.reload()
