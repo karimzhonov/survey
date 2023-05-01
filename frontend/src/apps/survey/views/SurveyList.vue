@@ -17,40 +17,48 @@
                 <Button :label="$t('Новый Опрос')" icon="pi pi-plus" class="p-button p-button-success" @click="openNew" />
             </template>
         </Toolbar>
-        <DataTable ref="dt" :value="surveys" showGridlines responsiveLayout="stack" v-model:filters="filters" :globalFilterFields="['name']">
-            <Column field="title" :header="$t('Название')">
-                <template #body="slotProps">
-                    <p>{{ $t(slotProps.data.name) }}</p>
-                </template>
-            </Column>
-            <Column field="status" :header="$t('Статус')">
-                <template #body="slotProps">
-                    <p :style="`color: ${status_color[slotProps.data.status]}`">{{ $t(slotProps.data.status) }}</p>
-                </template>
-            </Column>
-            <Column field="start_date" :header="$t('Дата начало')">
-                <template #body="slotProps">
-                    <p>{{ slotProps.data.start_date.toISOString() }}</p>
-                </template>
-            </Column>
-            <Column field="end_date" :header="$t('Дата окончание')">
-                <template #body="slotProps">
-                    <p>{{ slotProps.data.end_date ? slotProps.data.end_date.toISOString() : null }}</p>
-                </template>
-            </Column>
-            <Column style="width: 180px" field="delete_button" :header="$t('')">
-                <template #body="slotProps">
-                    <div class="flex justify-content-center">
-                        <Button class="ml-2" icon="pi pi-chevron-circle-right" @click="() => open_survey_public(slotProps.data.id)" />
-                        <Button class="p-button p-button-secondary ml-2" icon="pi pi-cog" @click="survey = slotProps.data; surveyDiolog = true" />
-                        <Button class="p-button p-button-help ml-2" icon="pi pi-pencil" @click="async () => await row_click(slotProps.data.id)" />
-                        <Button class="p-button p-button-success ml-2" icon="pi pi-chart-line" @click="$router.push({name: 'survey_dashboard', params: {id: slotProps.data.id}})" />
-                        <Button class="p-button p-button-danger ml-2" icon="pi pi-trash" @click="deleteSurveysDialog = true; survey=slotProps.data" />
-                    </div>
-                </template>
-            </Column>
-        </DataTable>
-
+        <TabView @tab-change="change_tab" class="p-0">
+            <TabPanel v-for="status in tabs" :key="status" :header="$t(status)">
+                <DataTable ref="dt" :value="surveys" showGridlines responsiveLayout="stack" v-model:filters="filters" :globalFilterFields="['name']">
+                    <Column field="title" :header="$t('Название')">
+                        <template #body="slotProps">
+                            <p>{{ $t(slotProps.data.name) }}</p>
+                        </template>
+                    </Column>
+                    <Column field="status" :header="$t('Статус')">
+                        <template #body="slotProps">
+                            <p :style="`color: ${status_color[slotProps.data.status]}`">{{ $t(slotProps.data.status) }}</p>
+                        </template>
+                    </Column>
+                    <Column field="start_date" :header="$t('Дата начало')">
+                        <template #body="slotProps">
+                            <p>{{ slotProps.data.start_date.toISOString() }}</p>
+                        </template>
+                    </Column>
+                    <Column field="end_date" :header="$t('Дата окончание')">
+                        <template #body="slotProps">
+                            <p>{{ slotProps.data.end_date ? slotProps.data.end_date.toISOString() : null }}</p>
+                        </template>
+                    </Column>
+                    <Column field="result_count" :header="$t('Ответы')">
+                        <template #body="slotProps">
+                            <p>{{ slotProps.data.result_count }}</p>
+                        </template>
+                    </Column>
+                    <Column style="width: 180px" field="delete_button" :header="$t('')">
+                        <template #body="slotProps">
+                            <div class="flex justify-content-center">
+                                <Button class="ml-2" icon="pi pi-chevron-circle-right" @click="() => open_survey_public(slotProps.data.id)" />
+                                <Button class="p-button p-button-secondary ml-2" icon="pi pi-cog" @click="survey = slotProps.data; surveyDiolog = true" />
+                                <Button class="p-button p-button-help ml-2" icon="pi pi-pencil" @click="async () => await row_click(slotProps.data.id)" />
+                                <Button class="p-button p-button-success ml-2" icon="pi pi-chart-line" @click="$router.push({name: 'survey_dashboard', params: {id: slotProps.data.id}})" />
+                                <Button :disabled="['closed'].includes(slotProps.data.status)" class="p-button p-button-danger ml-2" icon="pi pi-trash" @click="deleteSurveysDialog = true; survey=slotProps.data" />
+                            </div>
+                        </template>
+                    </Column>
+                </DataTable>                
+            </TabPanel>
+        </TabView>
     </div>
     <Dialog v-model:visible="deleteSurveysDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
         <template #header>
@@ -122,6 +130,9 @@ export default {
             },
             status_dropdown: [
                 "draft", "active", "pause", "finished", "closed"
+            ],
+            tabs: [
+                "all", "draft", "active", "pause", "finished", "closed"
             ]
         }
     },
@@ -136,7 +147,7 @@ export default {
         async deleteSelectedSurveys(id) {
             await $survey.delete(id)
             this.deleteSurveysDialog = false
-            this.surveys = await $survey.list(this.surveys_params)
+            await this.fetch_survey_list()
         },
         async open_survey_public(id) {
             let url = this.$router.resolve({name: 'survey_public', params: {id}}).href
@@ -150,17 +161,23 @@ export default {
         async save_survey(){
             await $survey.patch(this.survey.id, this.survey)
             this.surveyDiolog = false
+        },
+        async fetch_survey_list() {
+            this.surveys = await $survey.list(this.surveys_params)
+            for (let survey of this.surveys) {
+                survey.start_date = new Date(survey.start_date)
+                if (survey.end_date) {
+                    survey.end_date = new Date(survey.end_date)
+                }
+            }
+        },
+        async change_tab(e) {
+            this.surveys_params.status = this.tabs[e.index]
+            await this.fetch_survey_list()
         }
     },
     async mounted() {
-        this.surveys = await $survey.list(this.surveys_params)
-        for (let survey of this.surveys) {
-            survey.start_date = new Date(survey.start_date)
-            if (survey.end_date) {
-                survey.end_date = new Date(survey.end_date)
-            }
-        }
-        console.log(this.surveys);
+        await this.fetch_survey_list()
         store.commit("basic", {key: "loading", value: false})
     },
     computed: {

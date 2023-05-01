@@ -13,10 +13,14 @@ class SurveyShowSerializer(serializers.ModelSerializer):
 
 
 class SurveyListSerializer(serializers.ModelSerializer):
+    result_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Survey
         exclude = ['data']
+
+    def get_result_count(self, obj: Survey):
+        return SurveyResult.objects.filter(survey=obj).count()
 
 
 class SurveyCreateSerializer(serializers.ModelSerializer):

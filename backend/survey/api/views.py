@@ -1,10 +1,14 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import get_object_or_404
+from django.utils import timezone
+from django.db.models import Q
+from .filters import SurveyFilter
 from .serializers import SurveyShowSerializer, SurveyCreateSerializer, SurveyPublicResultSerializer, SurveyListSerializer, SurveyResultSerializer
 from ..models import Survey, SurveyResult
 
 
 class SurveyView(ModelViewSet):
+    filterset_class = SurveyFilter
 
     def get_queryset(self):
         return Survey.objects.filter(user=self.request.user)
@@ -19,6 +23,10 @@ class SurveyView(ModelViewSet):
     def create(self, request, *args, **kwargs):
         request.data.update(user=request.user.id)
         return super().create(request, *args, **kwargs)
+    
+    def perform_destroy(self, instance):
+        instance.status = Survey.STATUS_CLOSED
+        instance.save()
 
 
 class SurveyResultView(ModelViewSet):
@@ -49,7 +57,7 @@ class SurveyPublicView(ModelViewSet):
         return ()
 
     def get_queryset(self):
-        return Survey.objects.filter(status__in=[Survey.STATUS_ACTIVE])
+        return Survey.objects.filter(Q(end_date__gte=timezone.now()) | Q(end_date__isnull=True), status__in=[Survey.STATUS_ACTIVE], start_date__lte=timezone.now())
 
 
 class SurveyPublicResultView(ModelViewSet):

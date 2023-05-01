@@ -46,6 +46,20 @@ p, h1, h2, h3, h4, h5, h6, .sd-body--empty {
 //   background: var(--surface-ground)!important;
 // }
 
+.p-tabview-panels {
+  background: var(--surface-ground) !important;
+  padding: 0!important;
+  border: 0 none;
+  color: #495057;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.p-tabview-nav-link {
+  background: var(--surface-ground) !important;
+  border-radius: 0 !important;
+}
+
 .p-toolbar, .p-multiselect, .p-cascadeselect, .p-cascadeselect-panel, .p-dialog, .p-datatable-tbody tr, .p-datatable-thead th, .p-dropdown-items, .p-submenu-list, .p-inputtext {
   background: var(--surface-ground)!important;
 }
