@@ -2,6 +2,7 @@ from uuid import uuid4
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
+
 User = get_user_model()
 
 
@@ -32,3 +33,4 @@ class Survey(models.Model):
 class SurveyResult(models.Model):
     data = models.JSONField(default=dict)
     survey = models.ForeignKey(Survey, models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True, null=True)

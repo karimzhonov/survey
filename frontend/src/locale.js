@@ -163,7 +163,8 @@
     "Поиск по махаллям": "Махалла бойича қидирув",
     "Результатов не найдено": "Хеч қандай натижа топилмади",
     "Пройти опрос еще раз": "So'rovnomani qaytadan o'tish",
-    "Опрос не активный или завершен": "So‘rov faol emas yoki tugallangan"
+    "Опрос не активный или завершен": "So‘rov faol emas yoki tugallangan",
+    "При отправки результатов возникла ошибка": "Natijalarni yuborishda xatolik yuz berdi"
   }
 };
 
