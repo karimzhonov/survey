@@ -11,6 +11,8 @@ class SurveyView(ModelViewSet):
     filterset_class = SurveyFilter
 
     def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Survey.objects.all()
         return Survey.objects.filter(user=self.request.user)
 
     def get_serializer_class(self):
@@ -34,7 +36,10 @@ class SurveyResultView(ModelViewSet):
     serializer_class = SurveyResultSerializer
 
     def get_queryset(self):
-        return SurveyResult.objects.filter(survey_id=self.kwargs.get("survey_id"), survey__user=self.request.user)
+        qs = SurveyResult.objects.filter(survey_id=self.kwargs.get("survey_id"))
+        if self.request.user.is_superuser:
+            return qs
+        return qs.filter(survey__user=self.request.user)
 
 
 class SurveyPublicView(ModelViewSet):
