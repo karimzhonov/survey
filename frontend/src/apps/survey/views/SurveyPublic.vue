@@ -17,6 +17,7 @@ import { SurveyModel } from "survey-knockout-ui";
 import 'survey-core/defaultV2.min.css';
 import {Survey, SurveyPublicResult} from "@/apps/survey/models"
 import {survey_locale_uz_cl} from "@/locale"
+import {Converter} from "showdown"
 
 surveyLocalization.locales["uz-cl"] = survey_locale_uz_cl
 const $survey = new Survey()
@@ -44,6 +45,17 @@ export default {
         options.showDataSaving()
         this.save_survey(sender.data, options)
       })
+      //Create showdown markdown converter
+      var converter = new Converter();
+      survey.onTextMarkdown.add(function(survey, options){
+        //convert the markdown text to html
+        var str = converter.makeHtml(options.text);
+        //remove root paragraphs <p></p>
+        str = str.substring(3);
+        str = str.substring(0, str.length - 4);
+        //set html
+        options.html = str;
+    });
       surveyLocalization.currentLocale = this.$i18n.locale
       survey.locale = this.$i18n.locale
       surveyLocalization.locales["uz-cl"] = survey_locale_uz_cl
