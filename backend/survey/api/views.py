@@ -1,4 +1,4 @@
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.generics import get_object_or_404
 from django.utils import timezone
 from django.db.models import Q
@@ -43,23 +43,24 @@ class SurveyResultView(ModelViewSet):
         return qs.filter(survey__user=self.request.user)
 
 
-class SurveyPublicView(ModelViewSet):
-    http_method_names = ["get"]
+class SurveyPublicView(ReadOnlyModelViewSet):
     filter_backends = ()
 
     def get_serializer_class(self):
         return SurveyShowSerializer
 
     def get_authenticators(self):
-        instance: Survey = get_object_or_404(Survey, id=self.kwargs.get('pk'))
-        if instance.need_auth:
-            return super().get_authenticators()
+        if self.kwargs.get('pk'):
+            instance: Survey = get_object_or_404(Survey, id=self.kwargs.get('pk'))
+            if instance.need_auth:
+                return super().get_authenticators()
         return ()
     
     def get_permissions(self):
-        instance: Survey = get_object_or_404(Survey, id=self.kwargs.get('pk'))
-        if instance.need_auth:
-            return super().get_permissions()
+        if self.kwargs.get('pk'):
+            instance: Survey = get_object_or_404(Survey, id=self.kwargs.get('pk'))
+            if instance.need_auth:
+                return super().get_permissions()
         return ()
 
     def get_queryset(self):
