@@ -6,7 +6,7 @@
     </div>
     <div v-if="!loading" class="card mt-5" style="max-width: 1504px; margin-left: auto; margin-right: auto;">
         <h2 class="text-center mb-4">{{ $t("Опросы") }}</h2>
-        <Toolbar class="mb-4">
+        <Toolbar class="mb-4 p-3">
             <template #start>
                 <span class="p-input-icon-left">
                     <i class="pi pi-search" />
@@ -14,7 +14,9 @@
                 </span>
             </template>
             <template #end>
-                <Button :label="$t('Новый Опрос')" icon="pi pi-plus" class="p-button p-button-success" @click="openNew" />
+                <div class="mt-3">
+                    <Button :label="$t('Новый Опрос')" icon="pi pi-plus" class="p-button p-button-success" @click="openNew" />
+                </div>
             </template>
         </Toolbar>
         <TabView @tab-change="change_tab" class="p-0">
@@ -66,7 +68,7 @@
         </template>
         <div class="confirmation-content">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-            <span>{{ $t("confirm_delete_surveys") }}</span>
+            <span>{{ $t("Вы действителнр хотите сделать опрос завершенним?") }}</span>
         </div>
         <template #footer>
             <div class="mt-3">
@@ -129,7 +131,7 @@ export default {
                 "closed": "#EF4444"
             },
             status_dropdown: [
-                "draft", "active", "pause", "finished", "closed"
+                "draft", "active", "pause", "finished"
             ],
             tabs: [
                 "all", "draft", "active", "pause", "finished", "closed"

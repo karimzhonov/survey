@@ -29,8 +29,15 @@ class Survey(models.Model):
     end_date = models.DateTimeField(blank=True, null=True)
     need_auth = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ["id"]
+
 
 class SurveyResult(models.Model):
     data = models.JSONField(default=dict)
     survey = models.ForeignKey(Survey, models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        ordering = ["id"]
+    

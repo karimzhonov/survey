@@ -156,7 +156,7 @@ export default {
                 optionValue="code" :model-value="lang"
                 @change="language_change" inputStyle="padding: 1rem"
       />
-      <ToggleButton class="ml-3 mr-3" v-model="darkMode" onIcon="pi pi-moon" offIcon="pi pi-sun" :onLabel="$t('')" :off-label="$t('')" @change="onChangeTheme"/>
+      <!-- <ToggleButton class="ml-3 mr-3" v-model="darkMode" onIcon="pi pi-moon" offIcon="pi pi-sun" :onLabel="$t('')" :off-label="$t('')" @change="onChangeTheme"/> -->
       <button v-if="!is_auth" @click="onNavbarLoginButton()" class="p-link layout-topbar-button m-auto">
         <i class="pi pi-sign-in"></i>
         <span>{{ $t("Войти") }}</span>
