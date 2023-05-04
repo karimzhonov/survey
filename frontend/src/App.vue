@@ -14,7 +14,7 @@ export default {
         const url = new URL(window.location.href)
         if (url.searchParams.get('light') !== null) {
             const mode = url.searchParams.get('light') === '0' ? false : true
-            store.commit('basic', {key: 'darkMode', value: !mode})
+            store.commit('basic', {key: 'darkMode', value: true})
             const theme = mode ? 'lara-light-indigo' : 'lara-dark-indigo'
             localStorage.setItem('dark', !mode)
             const elementId = 'theme-css';

@@ -9,7 +9,7 @@ export default createStore({
         files: [], data: [], selectedFiles: [], loading: true, 
         selected_year: {}, top_bar_years: [], selected_file: {},
         data_table: [],
-        darkMode: window.matchMedia("(prefers-color-scheme:dark)").matches,
+        darkMode: false,
         messages: [],
     },
     getters: {},

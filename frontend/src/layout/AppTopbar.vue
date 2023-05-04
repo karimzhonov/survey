@@ -24,7 +24,7 @@ export default {
   async mounted() {
     this.mode_chack = window.matchMedia("(prefers-color-scheme:dark)").matches
     this.bindOutsideClickListener();
-    this.darkMode = window.matchMedia("(prefers-color-scheme:dark)").matches
+    this.darkMode = false
   },
   beforeUnmount() {
     this.unbindOutsideClickListener();
@@ -72,7 +72,7 @@ export default {
 
     onChangeTheme () {
     const mode = this.darkMode
-    store.commit('basic', {key: 'darkMode', value: !mode})
+    // store.commit('basic', {key: 'darkMode', value: !mode})
     const theme = mode ? 'lara-light-indigo' : 'lara-dark-indigo'
     const elementId = 'theme-css';
     const linkElement = document.getElementById(elementId);
@@ -106,10 +106,10 @@ export default {
     language_menu_items: () => store.getters.get_languages,
     selected_lang: () => store.getters.get_selected_lang,
     logo_panel() {
-        return !store.state.darkMode ? this.navbar_icon_1 : this.navbar_icon_1_dark
+        return true ? this.navbar_icon_1 : this.navbar_icon_1_dark
     },
     logo_city() {
-      return !store.state.darkMode ? this.navbar_icon_2 : this.navbar_icon_2_dark
+      return true ? this.navbar_icon_2 : this.navbar_icon_2_dark
     },  
     darkMode: () => store.state.darkMode,
     is_auth: () => store.state.token,
