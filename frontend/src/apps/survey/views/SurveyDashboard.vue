@@ -2,6 +2,12 @@
     
     <div class="card" style="max-width: 1504px; margin-left: auto; margin-right: auto;">
         <h2 class="text-center mt-3">{{ survey.name }}</h2>
+        <Dialog v-model:visible="surveyTable" :style="{width: '80%', height: '80%'}" header="Confirm" :modal="true">
+            <template #header>
+                <h4 class="m-2">{{ $t('Таблица резултатов') }}</h4>
+            </template>
+            <div id="surveyDashboardContainer"></div>
+        </Dialog>
         <Toolbar class="mb-4">
             <template #start>
                 <span class="p-input-icon-left">
@@ -15,6 +21,9 @@
                     @date-select="change_dates" id="end_date"/>
                 </span>
             </template>
+            <template #end>
+                <Button :label="$t('Таблица резултатов')" text @click="show_table_results"/>
+            </template>
         </Toolbar>
 
         <div v-if="loading" class="layout-main row justify-content-center">
@@ -22,9 +31,7 @@
             <ProgressSpinner style="top:30%; left:47%"/>
         </div>
     </div>
-    <div v-if="!loading">
-        <h3 class="text-center">{{ $t("Таблица резултатов") }}</h3>
-        <div id="surveyDashboardContainer"></div>
+    <div v-if="!loading">       
         <h3 class="text-center mt-2">{{ $t("Дашбоард") }}</h3>
         <div id="surveyVizPanel" />
     </div>
@@ -36,7 +43,7 @@ import "survey-analytics/survey.analytics.tabulator.css";
 import 'survey-analytics/survey.analytics.min.css';
 import {SurveyResult, Survey} from "../models"
 import * as XLSX from "xlsx";
-import { Model, QuestionTextModel } from 'survey-core';
+import { Model } from 'survey-core';
 import { VisualizationPanel, localization } from 'survey-analytics';
 import * as SurveyAnalyticsTabulator from "survey-analytics/survey.analytics.tabulator";
 
@@ -60,18 +67,30 @@ export default {
             survey: {},
             dates,
             results_params: {...this.dates_to_iso_dict(dates)},
-            include_questions: {}
+            include_questions: {},
+            surveyTable: false
         }
     },
     async mounted() {
         localization.currentLocale = this.$i18n.locale
         const $survey_result = new SurveyResult({survey_id: this.id})
         const results = await $survey_result.list(this.results_params)
-        this.survey = await this.refactor_survey(await $survey.get(this.id))
+        this.survey = await $survey.get(this.id)
         this.loading = false
         setTimeout(async () => await this.render(results))
     },
     methods: {
+        async show_table_results() {
+            this.surveyTable = true
+            setTimeout(() => {
+                this.survey_json = this.survey.data
+                const survey = new Model(this.survey_json);
+                const visPanelTabuler = new SurveyAnalyticsTabulator.Tabulator(
+                    survey, this.results, {}
+                );
+                visPanelTabuler.render("surveyDashboardContainer");
+            }, 1000)
+        },  
         async change_dates() {
             if (this.dates[1]) {
                 this.loading = true
@@ -126,13 +145,9 @@ export default {
         },
         async render(results) {
             results = results.map((v) => {v.data.date = v.date; return v.data})
-            results = await this.refactor_result_survay(results)
+            this.results = results
             this.survey_json = this.survey.data
             const survey = new Model(this.survey_json);
-            const visPanelTabuler = new SurveyAnalyticsTabulator.Tabulator(
-                survey, results, {}
-            );
-            visPanelTabuler.render("surveyDashboardContainer");
             document.getElementById("surveyVizPanel").innerHTML = ""
             const vizPanel = new VisualizationPanel(
                 survey.getAllQuestions(),

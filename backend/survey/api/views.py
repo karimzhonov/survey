@@ -68,7 +68,7 @@ class SurveyPublicView(ReadOnlyModelViewSet):
 
 
 class SurveyPublicResultView(ModelViewSet):
-    http_method_names = ["post"]
+    http_method_names = ["post", "get"]
     serializer_class = SurveyPublicResultSerializer
 
     def get_authenticators(self):
@@ -82,3 +82,6 @@ class SurveyPublicResultView(ModelViewSet):
         if instance.need_auth:
             return super().get_permissions()
         return ()
+    
+    def get_queryset(self):
+        return SurveyResult.objects.filter(survey_id=self.kwargs.get("survey_id"))

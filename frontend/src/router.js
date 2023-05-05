@@ -27,6 +27,10 @@ const router = createRouter({
             children: [
                 ...survey
             ]
+        },
+        {
+            path: "/results",
+            component: () => import("@/apps/survey/views/_ResultSchool.vue")
         }
     ]
 });
