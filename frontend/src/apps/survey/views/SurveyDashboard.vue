@@ -59,14 +59,15 @@ export default {
             survey_json: {},
             survey: {},
             dates,
-            results_params: {...this.dates_to_iso_dict(dates)}
+            results_params: {...this.dates_to_iso_dict(dates)},
+            include_questions: {}
         }
     },
     async mounted() {
         localization.currentLocale = this.$i18n.locale
         const $survey_result = new SurveyResult({survey_id: this.id})
         const results = await $survey_result.list(this.results_params)
-        this.survey = await $survey.get(this.id)
+        this.survey = await this.refactor_survey(await $survey.get(this.id))
         this.loading = false
         setTimeout(async () => await this.render(results))
     },
@@ -81,8 +82,51 @@ export default {
                 setTimeout(async () => await this.render(results))
             }
         },
+        async refactor_survey(survey) {
+            const new_survey = JSON.parse(JSON.stringify(survey))
+            new_survey.data.pages = []
+            for (let page of survey.data.pages) {
+                let new_page = JSON.parse(JSON.stringify(page))
+                let questions = {}
+                for (let element of page.elements) {
+                    if (element.type === "dropdown") {
+                        if (questions[element.title.default]) {
+                            questions[element.title.default].choices = [...questions[element.title.default].choices, ...element.choices]
+                            questions[element.title.default].choices.sort()
+                            this.include_questions[questions[element.title.default].name].push(element.name)
+                        } else {
+                            questions[element.title.default] = element
+                            this.include_questions[element.name] = [element.name]
+                        }
+                    } else {
+                        questions[element.title.default] = element
+                    }
+                }
+                new_page.elements = Object.values(questions)
+                new_survey.data.pages.push(new_page)
+            }
+            return new_survey
+        },
+        async refactor_result_survay(results) {
+            const new_result = []
+            for (let result of results) {
+                const user_result = {}
+                for (let q in result) {
+                    for (let iq in this.include_questions) {
+                        if (this.include_questions[iq].includes(q)) {
+                            user_result[iq] = result[q]
+                        } else {
+                            user_result[q] = result[q]
+                        }
+                    }
+                }
+                new_result.push(user_result)
+            }
+            return new_result
+        },
         async render(results) {
             results = results.map((v) => {v.data.date = v.date; return v.data})
+            results = await this.refactor_result_survay(results)
             this.survey_json = this.survey.data
             const survey = new Model(this.survey_json);
             const visPanelTabuler = new SurveyAnalyticsTabulator.Tabulator(
