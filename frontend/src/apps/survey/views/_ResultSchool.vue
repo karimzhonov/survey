@@ -1,16 +1,30 @@
 <template>
     <TabView @tab-change="change_tab" class="p-0">
         <TabPanel header="Класс-9">
-            <DataTable :value="results" showGridlines responsiveLayout="scroll">
-                <Column field="school" :header="$t('Школа')"></Column>
-                <Column field="value" :header="$t('Кол-во')"></Column>
-            </DataTable>
+            <div v-if="loading" class="layout-main row justify-content-center">
+                <div class="col">
+                    <ProgressSpinner style="top:30%; left:47%"/>
+                </div>
+            </div>
+            <div v-if="!loading">
+                <DataTable :value="results" showGridlines responsiveLayout="scroll">
+                    <Column field="school" :header="$t('Школа')"></Column>
+                    <Column field="value" :header="$t('Кол-во')"></Column>
+                </DataTable>
+            </div>
         </TabPanel>
         <TabPanel header="Класс-11">
-            <DataTable :value="results" showGridlines responsiveLayout="scroll">
-                <Column field="school" :header="$t('Школа')"></Column>
-                <Column field="value" :header="$t('Кол-во')"></Column>
-            </DataTable>
+            <div v-if="loading" class="layout-main row justify-content-center">
+                <div class="col">
+                    <ProgressSpinner style="top:30%; left:47%"/>
+                </div>
+            </div>
+            <div v-if="!loading">
+                <DataTable :value="results" showGridlines responsiveLayout="scroll">
+                    <Column field="school" :header="$t('Школа')"></Column>
+                    <Column field="value" :header="$t('Кол-во')"></Column>
+                </DataTable>
+            </div>
         </TabPanel>
     </TabView>
 </template>
@@ -22,7 +36,8 @@ export default {
     data() {
         return {
             ids: ["203cea56-f2a7-4b9a-9ca6-f79046b84662", "92081a10-f8f1-416e-91be-a9e5138c65bd"],
-            results: []
+            results: [],
+            loading: true
         }
     },
     async mounted() {
@@ -30,6 +45,7 @@ export default {
     },
     methods: {
         async change_tab(e) {
+            this.loading = true
             const results = await axios.get(`/api/survey/survey-public/${this.ids[e.index]}/result/`)
             const school_results = {}
             for (let r of results.data) {
@@ -44,6 +60,7 @@ export default {
                 return obj;
             }, []);
             this.results = ordered
+            this.loading = false
         }
     }
 }
