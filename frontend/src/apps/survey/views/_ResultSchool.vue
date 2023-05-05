@@ -21,7 +21,7 @@ export default {
     name: "_ResultSchool",
     data() {
         return {
-            ids: ["6c4cdd4a-92b4-43b4-8071-24aca27d9d6e", "203cea56-f2a7-4b9a-9ca6-f79046b84662", "92081a10-f8f1-416e-91be-a9e5138c65bd"],
+            ids: ["203cea56-f2a7-4b9a-9ca6-f79046b84662", "92081a10-f8f1-416e-91be-a9e5138c65bd"],
             results: []
         }
     },
