@@ -74,12 +74,16 @@ class SurveyPublicResultView(ModelViewSet):
 
     def get_authenticators(self):
         instance: Survey = get_object_or_404(Survey, id=self.kwargs.get('survey_id'))
+        if self.request.method in ["GET"]:
+            return []
         if instance.need_auth:
             return super().get_authenticators()
         return ()
     
     def get_permissions(self):
         instance: Survey = get_object_or_404(Survey, id=self.kwargs.get('survey_id'))
+        if self.request.method in ["GET"]:
+            return []
         if instance.need_auth:
             return super().get_permissions()
         return ()
