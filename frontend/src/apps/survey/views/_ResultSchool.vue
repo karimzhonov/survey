@@ -12,9 +12,6 @@
                     @date-select="change_dates" id="end_date"/>
                 </span>
             </template>
-            <template #end>
-                <Button :label="$t('Таблица резултатов')" text @click="show_table_results"/>
-            </template>
         </Toolbar>
     <TabView v-model:activeIndex="active" @tab-change="change_tab" class="p-0">
         <TabPanel header="Класс-9">
@@ -67,7 +64,7 @@ export default {
     methods: {
         async change_tab(e) {
             this.loading = true
-            const results = await axios.get(`/api/survey/survey-public/${this.ids[e.index]}/result/`, {...this.dates_to_iso_dict(this.dates)})
+            const results = await axios.get(`/api/survey/survey-public/${this.ids[e.index]}/result/`, {params: {...this.dates_to_iso_dict(this.dates)}})
             const school_results = {}
             for (let r of results.data) {
                 if (school_results[Object.values(r.data)[1]]) {
