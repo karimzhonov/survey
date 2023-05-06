@@ -1,5 +1,22 @@
 <template>
-    <TabView @tab-change="change_tab" class="p-0">
+    <Toolbar class="mb-4">
+            <template #start>
+                <span class="p-input-icon-left">
+                    <label for="start_date">{{ $t("Дата начало") }}</label>
+                    <Calendar class="ml-2" v-model="dates[0]" :manualInput="false" showTime hourFormat="24" dateFormat="dd.mm.yy"
+                    @date-select="change_dates" id="start_date"/>
+                </span>
+                <span class="p-input-icon-left ml-2">
+                    <label for="end_date">{{ $t("Дата конец") }}</label>
+                    <Calendar class="ml-2" v-model="dates[1]" :manualInput="false" showTime hourFormat="24" dateFormat="dd.mm.yy"
+                    @date-select="change_dates" id="end_date"/>
+                </span>
+            </template>
+            <template #end>
+                <Button :label="$t('Таблица резултатов')" text @click="show_table_results"/>
+            </template>
+        </Toolbar>
+    <TabView v-model:activeIndex="active" @tab-change="change_tab" class="p-0">
         <TabPanel header="Класс-9">
             <div v-if="loading" class="layout-main row justify-content-center">
                 <div class="col">
@@ -34,10 +51,14 @@ import axios from '@/plugins/axios';
 export default {
     name: "_ResultSchool",
     data() {
+        let now = new Date()
+        const dates = [new Date(now.getFullYear(), now.getMonth(), now.getDay(), 0, 0, 0), new Date(now.getFullYear(), now.getMonth(), now.getDay(), 23, 59, 59)]
         return {
-            ids: ["203cea56-f2a7-4b9a-9ca6-f79046b84662", "92081a10-f8f1-416e-91be-a9e5138c65bd"],
+            ids: ["92081a10-f8f1-416e-91be-a9e5138c65bd", "203cea56-f2a7-4b9a-9ca6-f79046b84662"],
             results: [],
-            loading: true
+            loading: true,
+            dates,
+            active: 0
         }
     },
     async mounted() {
@@ -61,7 +82,12 @@ export default {
             }, []);
             this.results = ordered
             this.loading = false
-        }
+        },
+        async change_dates() {
+            if (this.dates[1]) {
+                await this.change_tab({index: this.active})
+            }
+        },
     }
 }
 </script>
