@@ -12,38 +12,24 @@
                     @date-select="change_dates" id="end_date"/>
                 </span>
             </template>
+            <template #end>
+                <span class="p-input-icon-left mr-2">
+                    <i class="pi pi-search" />
+                    <InputText v-model="filters['global'].value" placeholder="Поиск" />
+                </span>
+            </template>
         </Toolbar>
-    <TabView v-model:activeIndex="active" @tab-change="change_tab" class="p-0">
-        <TabPanel header="Класс-9">
-            <div v-if="loading" class="layout-main row justify-content-center">
-                <div class="col">
-                    <ProgressSpinner style="top:30%; left:47%"/>
-                </div>
-            </div>
-            <div v-if="!loading">
-                <DataTable :value="results" showGridlines responsiveLayout="scroll">
-                    <Column field="school" :header="$t('Школа')"></Column>
-                    <Column field="value" :header="$t('Кол-во')"></Column>
-                </DataTable>
-            </div>
-        </TabPanel>
-        <TabPanel header="Класс-11">
-            <div v-if="loading" class="layout-main row justify-content-center">
-                <div class="col">
-                    <ProgressSpinner style="top:30%; left:47%"/>
-                </div>
-            </div>
-            <div v-if="!loading">
-                <DataTable :value="results" showGridlines responsiveLayout="scroll">
-                    <Column field="school" :header="$t('Школа')"></Column>
-                    <Column field="value" :header="$t('Кол-во')"></Column>
-                </DataTable>
-            </div>
-        </TabPanel>
-    </TabView>
+    
+    <DataTable v-model:filters="filters" :value="results" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']" :loading="loading">
+        <Column field="school" :header="$t('Школа')"></Column>
+        <Column field="value_9" :header="$t('9-класс')"></Column>
+        <Column field="value_11" :header="$t('11-класс')"></Column>
+        <Column field="sum" :header="$t('Общий')"></Column>
+    </DataTable>
 </template>
 <script>
 import axios from '@/plugins/axios';
+import { FilterMatchMode } from 'primevue/api';
 
 export default {
     name: "_ResultSchool",
@@ -55,26 +41,43 @@ export default {
             results: [],
             loading: true,
             dates,
-            active: 0
+            active: 0,
+            filters: {global: { value: null, matchMode: FilterMatchMode.CONTAINS }}
         }
     },
     async mounted() {
-        await this.change_tab({index: 0})
+        await this.change_tab()
     },
     methods: {
-        async change_tab(e) {
+        async change_tab() {
             this.loading = true
-            const results = await axios.get(`/api/survey/survey-public/${this.ids[e.index]}/result/`, {params: {...this.dates_to_iso_dict(this.dates)}})
+            const results_9 = await axios.get(`/api/survey/survey-public/${this.ids[0]}/result/`, {params: {...this.dates_to_iso_dict(this.dates)}})
+            const results_11 = await axios.get(`/api/survey/survey-public/${this.ids[1]}/result/`, {params: {...this.dates_to_iso_dict(this.dates)}})
             const school_results = {}
-            for (let r of results.data) {
+            for (let r of results_9.data) {
                 if (school_results[Object.values(r.data)[1]]) {
-                    school_results[Object.values(r.data)[1]] += 1
+                    school_results[Object.values(r.data)[1]].value_9 += 1
                 } else {
-                    school_results[Object.values(r.data)[1]] = 1
+                    school_results[Object.values(r.data)[1]] = {
+                        value_11: 0,
+                        value_9: 1
+                    }
                 }
             }
+
+            for (let r of results_11.data) {
+                if (school_results[Object.values(r.data)[1]]) {
+                    school_results[Object.values(r.data)[1]].value_11 += 1
+                } else {
+                    school_results[Object.values(r.data)[1]] = {
+                        value_11: 1,
+                        value_9: 0
+                    }
+                }
+            }
+
             const ordered = Object.keys(school_results).sort().reduce((obj, key) => { 
-                obj.push({"school": key, value: school_results[key]})
+                obj.push({"school": key, ...school_results[key], sum: school_results[key].value_11 + school_results[key].value_9})
                 return obj;
             }, []);
             this.results = ordered
@@ -83,6 +86,7 @@ export default {
         async change_dates() {
             if (this.dates[1]) {
                 await this.change_tab({index: this.active})
+
             }
         },
         dates_to_iso_dict(dates) {
