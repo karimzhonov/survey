@@ -70,6 +70,7 @@ class SurveyPublicView(ReadOnlyModelViewSet):
 class SurveyPublicResultView(ModelViewSet):
     http_method_names = ["post", "get"]
     serializer_class = SurveyPublicResultSerializer
+    filterset_class = SurveyResultFilter
 
     def get_authenticators(self):
         instance: Survey = get_object_or_404(Survey, id=self.kwargs.get('survey_id'))

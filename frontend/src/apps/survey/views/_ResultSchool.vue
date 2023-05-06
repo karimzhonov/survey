@@ -67,7 +67,7 @@ export default {
     methods: {
         async change_tab(e) {
             this.loading = true
-            const results = await axios.get(`/api/survey/survey-public/${this.ids[e.index]}/result/`)
+            const results = await axios.get(`/api/survey/survey-public/${this.ids[e.index]}/result/`, {...this.dates_to_iso_dict(this.dates)})
             const school_results = {}
             for (let r of results.data) {
                 if (school_results[Object.values(r.data)[1]]) {
@@ -88,6 +88,15 @@ export default {
                 await this.change_tab({index: this.active})
             }
         },
+        dates_to_iso_dict(dates) {
+            const new_dates = [
+                new Date(dates[0].getFullYear(), dates[0].getMonth(), dates[0].getDay(), dates[0].getHours() + 5, dates[0].getMinutes(), 0), 
+                new Date(dates[1].getFullYear(), dates[1].getMonth(), dates[1].getDay(), dates[1].getHours() + 5, dates[1].getMinutes(), 0)
+            ]
+            return {
+                date__gte: new_dates[0].toISOString({timezone: "UTC"}).slice(0, 19), date__lte: new_dates[1].toISOString().slice(0, 19)
+            }
+        }
     }
 }
 </script>
