@@ -40,31 +40,29 @@
         <ColumnGroup type="footer">
             <Row>
                 <Column></Column>
-                <Column :footer="all.region"></Column>
-                <Column :footer="all.value_9" :header="$t('11-класс, Численнсть')"></Column>
-                <Column :footer="all.v_9" :header="$t('9-класс, Участвовали')"></Column>
-                <Column :footer="`${all.v_9_per} %`" :header="$t('9-класс, Охват (%)')"></Column>
-                <Column :footer="all.value_11" :header="$t('11-класс, Численнсть')"></Column>
-                <Column :footer="all.v_11" :header="$t('11-класс, Участвовали')"></Column>
-                <Column :footer="`${all.v_11_per} %`" :header="$t('11-класс, Охват (%)')"></Column>
-                <Column :footer="all.summa" :header="$t('Итог, Численнсть')"></Column>
-                <Column :footer="all.sum" :header="$t('Итог, Участвовали')"></Column>
-                <Column :footer="`${all.sum_per} %`" :header="$t('Итог, Охват (%)')"></Column>
+                <Column footer="Общий результат"></Column>
+                <Column :footer="all.value_9"></Column>
+                <Column :footer="all.v_9"></Column>
+                <Column :footer="`${all.v_9_per} %`"></Column>
+                <Column :footer="all.value_11"></Column>
+                <Column :footer="all.v_11"></Column>
+                <Column :footer="`${all.v_11_per} %`"></Column>
+                <Column :footer="all.summa"></Column>
+                <Column :footer="all.sum"></Column>
+                <Column :footer="`${all.sum_per} %`"></Column>
             </Row>
-        </ColumnGroup>
-        <ColumnGroup type="footer">
             <Row>
                 <Column></Column>
-                <Column :footer="all_all.region"></Column>
-                <Column :footer="all_all.value_9" :header="$t('11-класс, Численнсть')"></Column>
-                <Column :footer="all_all.v_9" :header="$t('9-класс, Участвовали')"></Column>
-                <Column :footer="`${all_all.v_9_per} %`" :header="$t('9-класс, Охват (%)')"></Column>
-                <Column :footer="all_all.value_11" :header="$t('11-класс, Численнсть')"></Column>
-                <Column :footer="all_all.v_11" :header="$t('11-класс, Участвовали')"></Column>
-                <Column :footer="`${all_all.v_11_per} %`" :header="$t('11-класс, Охват (%)')"></Column>
-                <Column :footer="all_all.summa" :header="$t('Итог, Численнсть')"></Column>
-                <Column :footer="all_all.sum" :header="$t('Итог, Участвовали')"></Column>
-                <Column :footer="`${all_all.sum_per} %`" :header="$t('Итог, Охват (%)')"></Column>
+                <Column footer="Общий итог"></Column>
+                <Column :footer="all_all.value_9"></Column>
+                <Column :footer="all_all.v_9"></Column>
+                <Column :footer="`${all_all.v_9_per} %`"></Column>
+                <Column :footer="all_all.value_11"></Column>
+                <Column :footer="all_all.v_11"></Column>
+                <Column :footer="`${all_all.v_11_per} %`"></Column>
+                <Column :footer="all_all.summa"></Column>
+                <Column :footer="all_all.sum"></Column>
+                <Column :footer="`${all_all.sum_per} %`"></Column>
             </Row>
         </ColumnGroup>
         <template #expansion="slotProps">
@@ -241,8 +239,8 @@ export default {
             this.all = all
 
             const all_all = JSON.parse(JSON.stringify(all))
-            all_all.value_9 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_9; return aa}); return a})
-            all_all.value_11 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_11; return aa}); return a})
+            all_all.value_9 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_9; return aa}, 0); return a}, 0)
+            all_all.value_11 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_11; return aa}, 0); return a}, 0)
             all_all.summa = all_all.value_9 + all_all.value_11
             all_all.v_9_per = all_all.v_9 ? Math.round(all_all.v_9 / all_all.value_9 * 10000) / 100 : ""
             all_all.v_11_per = all_all.v_11 ? Math.round(all_all.v_11 / all_all.value_11 * 10000) / 100 : ""
