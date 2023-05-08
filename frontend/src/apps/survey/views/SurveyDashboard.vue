@@ -59,7 +59,7 @@ export default {
     props: ["id"],
     data() {
         let now = new Date()
-        const dates = [new Date(now.getFullYear(), now.getMonth(), now.getDay(), 0, 0, 0), new Date(now.getFullYear(), now.getMonth(), now.getDay(), 23, 59, 59)]
+        const dates = [new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59)]
         return {
             loading: true,
             results: [],
@@ -159,8 +159,8 @@ export default {
         },
         dates_to_iso_dict(dates) {
             const new_dates = [
-                new Date(dates[0].getFullYear(), dates[0].getMonth(), dates[0].getDay(), dates[0].getHours() + 5, dates[0].getMinutes(), 0), 
-                new Date(dates[1].getFullYear(), dates[1].getMonth(), dates[1].getDay(), dates[1].getHours() + 5, dates[1].getMinutes(), 0)
+                new Date(dates[0].getFullYear(), dates[0].getMonth(), dates[0].getDate(), dates[0].getHours() + 5, dates[0].getMinutes(), 0), 
+                new Date(dates[1].getFullYear(), dates[1].getMonth(), dates[1].getDate(), dates[1].getHours() + 5, dates[1].getMinutes(), 0)
             ]
             return {
                 date__gte: new_dates[0].toISOString({timezone: "UTC"}).slice(0, 19), date__lte: new_dates[1].toISOString().slice(0, 19)
