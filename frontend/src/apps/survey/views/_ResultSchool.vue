@@ -241,14 +241,14 @@ export default {
             this.all = all
 
             const all_all = JSON.parse(JSON.stringify(all))
-            all_all.value_9 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v.schools).reduce((aa, vv) => {aa+= vv.value_9; return aa}); return a})
-            all_all.value_11 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v.schools).reduce((aa, vv) => {aa+= vv.value_11; return aa}); return a})
+            all_all.value_9 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_9; return aa}); return a})
+            all_all.value_11 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_11; return aa}); return a})
             all_all.summa = all_all.value_9 + all_all.value_11
             all_all.v_9_per = all_all.v_9 ? Math.round(all_all.v_9 / all_all.value_9 * 10000) / 100 : ""
             all_all.v_11_per = all_all.v_11 ? Math.round(all_all.v_11 / all_all.value_11 * 10000) / 100 : ""
             all_all.sum_per = all.sum ? Math.round(all_all.sum / all_all.summa * 10000) / 100 : ""
             this.all_all = all_all
-            
+
             this.results = ordered
             this.loading = false
             
