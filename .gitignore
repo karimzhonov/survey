@@ -284,3 +284,4 @@ backend/static/
 backend/test.py
 redis-data/
 backend/**/migrations/0*
+test.py
