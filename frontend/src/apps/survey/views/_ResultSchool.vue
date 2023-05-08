@@ -213,9 +213,9 @@ export default {
             this.loading = false
             
         },
-        async change_dates(dates) {
-            if (dates[1]) {
-                await this.change_tab(dates)
+        async change_dates() {
+            if (this.dates[1]) {
+                await this.change_tab(this.dates)
 
             }
         },
