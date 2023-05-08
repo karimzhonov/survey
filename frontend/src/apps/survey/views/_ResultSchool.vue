@@ -205,7 +205,7 @@ export default {
             all.v_9_per = all.v_9 ? Math.round(all.v_9 / all.value_9 * 10000) / 100 : ""
             all.v_11_per = all.v_11 ? Math.round(all.v_11 / all.value_11 * 10000) / 100 : ""
             all.summa = all.value_9 + all.value_11
-            all.sum = all.v_9 ? all.v_9 : 0 + all.v_11 ? all.v_11 : 0
+            all.sum = (all.v_9 ? all.v_9 : 0) + (all.v_11 ? all.v_11 : 0)
             all.sum = all.sum ? all.sum : ""
             all.sum_per = all.sum ? Math.round(all.sum / all.summa * 10000) / 100 : ""
             this.all = all
