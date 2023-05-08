@@ -12,15 +12,9 @@
                     @date-select="change_dates" id="end_date"/>
                 </span>
             </template>
-            <template #end>
-                <span class="p-input-icon-left mr-2">
-                    <i class="pi pi-search" />
-                    <InputText v-model="filters['global'].value" placeholder="Поиск" />
-                </span>
-            </template>
         </Toolbar>
     
-    <DataTable v-model:filters="filters" :value="results" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']" :loading="loading" v-model:expandedRows="expandedRows">
+    <DataTable :value="results" showGridlines responsiveLayout="scroll" :loading="loading" v-model:expandedRows="expandedRows">
         <Column expander style="width: 5rem" />
         <Column field="region" :header="$t('Район')"></Column>
         <Column field="value_9" :header="$t('9-класс, Численнсть')"></Column>
@@ -61,8 +55,16 @@
         </ColumnGroup>
         <template #expansion="slotProps">
             <div class="p-3">
-                <h5>Школы - {{ slotProps.data.region }}</h5>
-                <DataTable :value="slotProps.data.schools" >
+                <div class="flex justify-content-between">
+                    <h5>Школы - {{ slotProps.data.region }}</h5>
+                    <span class="p-input-icon-left mr-2">
+                        <i class="pi pi-search" />
+                        <InputText v-model="filters[slotProps.data.region]['global'].value" placeholder="Поиск" />
+                    </span>
+                </div>
+                
+
+                <DataTable :value="slotProps.data.schools" v-model:filters="filters[slotProps.data.region]" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']">
                     <Column field="school" :header="$t('Школа')"></Column>
                     <Column field="value_9" :header="$t('9-класс, Численнсть')"></Column>
                     <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
@@ -166,6 +168,7 @@ export default {
                 }
             }
             const ordered = Object.keys(plan).sort().reduce((obj, key) => { 
+                this.filters[key] = {global: { value: null, matchMode: FilterMatchMode.CONTAINS }}
                 const d = {
                     "region": key, 
                     "schools": Object.keys(plan[key]).sort().reduce((acc, school) => {
