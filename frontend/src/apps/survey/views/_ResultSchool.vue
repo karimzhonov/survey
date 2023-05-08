@@ -161,10 +161,10 @@ export default {
                             school.replace("maktab", "") == Object.values(r.data)[1] ||
                             school.replace(" maktab", "") == Object.values(r.data)[1]
                         ) {
-                            if (plan[region][school]["v_11"]) {
+                            if (plan[region][school]) {
                                 plan[region][school]["v_11"] += 1
                             } else {
-                                plan[region][school]["v_11"] = 1
+                                plan[region][school] = {v_9: 0, v_11: 1, ...plan_[region][school]}
                             }
                         }
                     }
