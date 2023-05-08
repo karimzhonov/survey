@@ -178,7 +178,7 @@ export default {
                         d.v_9_per = d.v_9 ? Math.round(d.v_9 / d.value_9 * 10000) / 100 : ""
                         d.v_11_per = d.v_11 ? Math.round(d.v_11 / d.value_11 * 10000) / 100 : ""
                         d.summa = d.value_9 + d.value_11
-                        d.sum = d.v_9 ? d.v_9 : 0 + d.v_11 ? d.v_11 : 0
+                        d.sum = (d.v_9 ? d.v_9 : 0) + (d.v_11 ? d.v_11 : 0)
                         d.sum = d.sum ? d.sum : ""
                         d.sum_per = d.sum ? Math.round(d.sum / d.summa * 10000) / 100 : ""
                         acc.push(d)
@@ -192,7 +192,7 @@ export default {
                 d.v_9_per = d.v_9 ? Math.round(d.v_9 / d.value_9 * 10000) / 100 : ""
                 d.v_11_per = d.v_11 ? Math.round(d.v_11 / d.value_11 * 10000) / 100 : ""
                 d.summa = d.value_9 + d.value_11
-                d.sum = d.v_9 ? d.v_9 : 0 + d.v_11 ? d.v_11 : 0
+                d.sum = (d.v_9 ? d.v_9 : 0) + (d.v_11 ? d.v_11 : 0)
                 d.sum = d.sum ? d.sum : ""
                 d.sum_per = d.sum ? Math.round(d.sum / d.summa * 10000) / 100 : ""
                 obj.push(d)
