@@ -86,7 +86,7 @@ export default {
     name: "_ResultSchool",
     data() {
         let now = new Date()
-        const dates = [new Date(now.getFullYear(), now.getMonth(), now.getDay(), 0, 0, 0), new Date(now.getFullYear(), now.getMonth(), now.getDay(), 23, 59, 59)]
+        const dates = [new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59)]
         return {
             ids: ["92081a10-f8f1-416e-91be-a9e5138c65bd", "203cea56-f2a7-4b9a-9ca6-f79046b84662"],
             results: [],
@@ -99,26 +99,26 @@ export default {
         }
     },
     async mounted() {
-        await this.change_tab()
+        await this.change_tab(this.dates)
     },
     methods: {
-        async change_tab() {
+        async change_tab(dates) {
             let plan = await fetch("/json/schools.json")
             plan = await plan.json()
             delete plan["NaN"]
             this.loading = true
-            const results_9 = await axios.get(`/api/survey/survey-public/${this.ids[0]}/result/`, {params: {...this.dates_to_iso_dict(this.dates)}})
-            const results_11 = await axios.get(`/api/survey/survey-public/${this.ids[1]}/result/`, {params: {...this.dates_to_iso_dict(this.dates)}})
+            const results_9 = await axios.get(`/api/survey/survey-public/${this.ids[0]}/result/`, {params: {...this.dates_to_iso_dict(dates)}})
+            const results_11 = await axios.get(`/api/survey/survey-public/${this.ids[1]}/result/`, {params: {...this.dates_to_iso_dict(dates)}})
 
             for (let r of results_9.data) {
                 for (let region in plan) {
                     for (let school in plan[region]) {
-                        console.log(Object.values(r.data)[1].replace("-мактаб", "") == school, Object.values(r.data)[1].replace("-мактаб", ""), school, region);
                         if (
                             school == Object.values(r.data)[1] || 
                             school == Object.values(r.data)[1].replace("-мактаб", "") ||
                             school == Object.values(r.data)[1].replace("мактаб", "") ||
                             school == Object.values(r.data)[1].replace(" мактаб", "") ||
+                            school == Object.values(r.data)[1].replace("-", " ") ||
 
                             school.replace("-мактаб", "") == Object.values(r.data)[1] ||
                             school.replace("мактаб", "") == Object.values(r.data)[1] ||
@@ -146,6 +146,7 @@ export default {
                             school == Object.values(r.data)[1].replace("-мактаб", "") ||
                             school == Object.values(r.data)[1].replace("мактаб", "") ||
                             school == Object.values(r.data)[1].replace(" мактаб", "") ||
+                            school == Object.values(r.data)[1].replace("-", " ") ||
 
                             school.replace("-мактаб", "") == Object.values(r.data)[1] ||
                             school.replace("мактаб", "") == Object.values(r.data)[1] ||
@@ -209,23 +210,22 @@ export default {
             all.sum_per = all.sum ? Math.round(all.sum / all.summa * 10000) / 100 : ""
             this.all = all
             this.results = ordered
-            console.log(ordered);
             this.loading = false
             
         },
-        async change_dates() {
-            if (this.dates[1]) {
-                await this.change_tab({index: this.active})
+        async change_dates(dates) {
+            if (dates[1]) {
+                await this.change_tab(dates)
 
             }
         },
         dates_to_iso_dict(dates) {
             const new_dates = [
-                new Date(dates[0].getFullYear(), dates[0].getMonth(), dates[0].getDay(), dates[0].getHours() + 5, dates[0].getMinutes(), 0), 
-                new Date(dates[1].getFullYear(), dates[1].getMonth(), dates[1].getDay(), dates[1].getHours() + 5, dates[1].getMinutes(), 0)
+                new Date(dates[0].getFullYear(), dates[0].getMonth(), dates[0].getDate(), dates[0].getHours() + 5, dates[0].getMinutes(), 0), 
+                new Date(dates[1].getFullYear(), dates[1].getMonth(), dates[1].getDate(), dates[1].getHours() + 5, dates[1].getMinutes(), 0)
             ]
             return {
-                date__gte: new_dates[0].toISOString({timezone: "UTC"}).slice(0, 19), date__lte: new_dates[1].toISOString().slice(0, 19)
+                date__gte: new_dates[0].toISOString().slice(0, 19), date__lte: new_dates[1].toISOString().slice(0, 19)
             }
         }
     }
