@@ -52,6 +52,21 @@
                 <Column :footer="`${all.sum_per} %`" :header="$t('Итог, Охват (%)')"></Column>
             </Row>
         </ColumnGroup>
+        <ColumnGroup type="footer">
+            <Row>
+                <Column></Column>
+                <Column :footer="all_all.region"></Column>
+                <Column :footer="all_all.value_9" :header="$t('11-класс, Численнсть')"></Column>
+                <Column :footer="all_all.v_9" :header="$t('9-класс, Участвовали')"></Column>
+                <Column :footer="`${all_all.v_9_per} %`" :header="$t('9-класс, Охват (%)')"></Column>
+                <Column :footer="all_all.value_11" :header="$t('11-класс, Численнсть')"></Column>
+                <Column :footer="all_all.v_11" :header="$t('11-класс, Участвовали')"></Column>
+                <Column :footer="`${all_all.v_11_per} %`" :header="$t('11-класс, Охват (%)')"></Column>
+                <Column :footer="all_all.summa" :header="$t('Итог, Численнсть')"></Column>
+                <Column :footer="all_all.sum" :header="$t('Итог, Участвовали')"></Column>
+                <Column :footer="`${all_all.sum_per} %`" :header="$t('Итог, Охват (%)')"></Column>
+            </Row>
+        </ColumnGroup>
         <template #expansion="slotProps">
             <div class="p-3">
                 <div class="flex justify-content-between">
@@ -103,7 +118,8 @@ export default {
             active: 0,
             filters: {global: { value: null, matchMode: FilterMatchMode.CONTAINS }},
             expandedRows: [],
-            all: {}
+            all: {},
+            all_all: {}
         }
     },
     async mounted() {
@@ -223,6 +239,16 @@ export default {
             all.sum = all.sum ? all.sum : ""
             all.sum_per = all.sum ? Math.round(all.sum / all.summa * 10000) / 100 : ""
             this.all = all
+
+            const all_all = JSON.parse(JSON.stringify(all))
+            all_all.value_9 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v.schools).reduce((aa, vv) => {aa+= vv.value_9; return aa}); return a})
+            all_all.value_11 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v.schools).reduce((aa, vv) => {aa+= vv.value_11; return aa}); return a})
+            all_all.summa = all_all.value_9 + all_all.value_11
+            all_all.v_9_per = all_all.v_9 ? Math.round(all_all.v_9 / all_all.value_9 * 10000) / 100 : ""
+            all_all.v_11_per = all_all.v_11 ? Math.round(all_all.v_11 / all_all.value_11 * 10000) / 100 : ""
+            all_all.sum_per = all.sum ? Math.round(all_all.sum / all_all.summa * 10000) / 100 : ""
+            this.all_all = all_all
+            
             this.results = ordered
             this.loading = false
             
@@ -251,13 +277,13 @@ export default {
                     row_excel[`${this.$t('Школа')}`] = school.school
                     row_excel[`${this.$t('9-класс, Численнсть')}`] = school.value_9
                     row_excel[`${this.$t('9-класс, Участвовали')}`] = school.v_9
-                    row_excel[`${this.$t('9-класс, Участвовали')}`] = school.v_9_per
+                    row_excel[`${this.$t('9-класс, Охват (%)')}`] = school.v_9_per
                     row_excel[`${this.$t('11-класс, Численнсть')}`] = school.value_11
                     row_excel[`${this.$t('11-класс, Участвовали')}`] = school.v_11
                     row_excel[`${this.$t('11-класс, Охват (%)')}`] = school.v_11_per
                     row_excel[`${this.$t('Итог, Численнсть')}`] = school.summa
                     row_excel[`${this.$t('Итог, Участвовали')}`] = school.sum
-                    row_excel[`${this.$t('Итог, Участвовали')}`] = school.sum_per
+                    row_excel[`${this.$t('Итог, Охват (%)')}`] = school.sum_per
                     data.push(row_excel)
                 }
             }
