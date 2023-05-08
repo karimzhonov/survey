@@ -38,19 +38,13 @@
                 <Column :footer="all.region"></Column>
                 <Column :footer="all.value_9" :header="$t('11-класс, Численнсть')"></Column>
                 <Column :footer="all.v_9" :header="$t('9-класс, Участвовали')"></Column>
-                <Column :footer="all.v_9_per" :header="$t('9-класс, Охват (%)')">
-                    <template #body="slotProps">{{ slotProps.data.v_9_per }} {{ slotProps.data.v_9_per ? "%" : "" }}</template>
-                </Column>
+                <Column :footer="`${all.v_9_per} %`" :header="$t('9-класс, Охват (%)')"></Column>
                 <Column :footer="all.value_11" :header="$t('11-класс, Численнсть')"></Column>
                 <Column :footer="all.v_11" :header="$t('11-класс, Участвовали')"></Column>
-                <Column :footer="all.v_11_per" :header="$t('11-класс, Охват (%)')">
-                    <template #body="slotProps">{{ slotProps.data.v_11_per }} {{ slotProps.data.v_11_per ? "%" : "" }}</template>
-                </Column>
+                <Column :footer="`${all.v_11_per} %`" :header="$t('11-класс, Охват (%)')"></Column>
                 <Column :footer="all.summa" :header="$t('Итог, Численнсть')"></Column>
                 <Column :footer="all.sum" :header="$t('Итог, Участвовали')"></Column>
-                <Column :footer="all.sum_per" :header="$t('Итог, Охват (%)')">
-                    <template #body="slotProps">{{ slotProps.data.sum_per }} {{ slotProps.data.sum_per ? "%" : "" }}</template>
-                </Column>
+                <Column :footer="`${all.sum_per} %`" :header="$t('Итог, Охват (%)')"></Column>
             </Row>
         </ColumnGroup>
         <template #expansion="slotProps">
@@ -68,13 +62,19 @@
                     <Column field="school" :header="$t('Школа')"></Column>
                     <Column field="value_9" :header="$t('9-класс, Численнсть')"></Column>
                     <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
-                    <Column field="v_9_per" :header="$t('9-класс, Охват (%)')"></Column>
-                    <Column field="value_9" :header="$t('11-класс, Численнсть')"></Column>
-                    <Column field="v_9" :header="$t('11-класс, Участвовали')"></Column>
-                    <Column field="v_9_per" :header="$t('11-класс, Охват (%)')"></Column>
+                    <Column field="v_9_per" :header="$t('9-класс, Охват (%)')">
+                        <template #body="slotProps">{{ slotProps.data.v_9_per }} {{ slotProps.data.v_9_per ? "%" : "" }}</template>
+                    </Column>
+                    <Column field="value_11" :header="$t('11-класс, Численнсть')"></Column>
+                    <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
+                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')">
+                        <template #body="slotProps">{{ slotProps.data.v_11_per }} {{ slotProps.data.v_11_per ? "%" : "" }}</template>
+                    </Column>
                     <Column field="summa" :header="$t('Итог, Численнсть')"></Column>
                     <Column field="sum" :header="$t('Итог, Участвовали')"></Column>
-                    <Column field="sum_per" :header="$t('Итог, Охват (%)')"></Column>
+                    <Column field="sum_per" :header="$t('Итог, Охват (%)')">
+                        <template #body="slotProps">{{ slotProps.data.sum_per }} {{ slotProps.data.sum_per ? "%" : "" }}</template>
+                    </Column>
                 </DataTable>
             </div>
         </template>
