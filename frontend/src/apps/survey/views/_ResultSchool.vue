@@ -12,6 +12,11 @@
                     @date-select="change_dates" id="end_date"/>
                 </span>
             </template>
+            <template #end>
+                <div style="text-align: right">
+                    <Button icon="pi pi-external-link" class="p-button-success" :label="$t('Скачать Excel')" @click="exportExcel"/> 
+                </div>
+            </template>
         </Toolbar>
     
     <DataTable :value="results" showGridlines responsiveLayout="scroll" :loading="loading" v-model:expandedRows="expandedRows">
@@ -83,6 +88,7 @@
 <script>
 import axios from '@/plugins/axios';
 import { FilterMatchMode } from 'primevue/api';
+import exportFromJSON from "export-from-json";
 
 export default {
     name: "_ResultSchool",
@@ -112,7 +118,7 @@ export default {
             const results_9 = await axios.get(`/api/survey/survey-public/${this.ids[0]}/result/`, {params: {...this.dates_to_iso_dict(dates)}})
             const results_11 = await axios.get(`/api/survey/survey-public/${this.ids[1]}/result/`, {params: {...this.dates_to_iso_dict(dates)}})
             const plan = {}
-            for (let r of results_9.data) {
+            result: for (let r of results_9.data) {
                 for (let region in plan_) {
                     if (!plan[region]) {
                         plan[region] = {}
@@ -138,12 +144,13 @@ export default {
                             } else {
                                 plan[region][school] = {v_9: 1, v_11: 0, ...plan_[region][school]}
                             }
+                            continue result
                         }
                     }
                 }
             }
 
-            for (let r of results_11.data) {
+            result: for (let r of results_11.data) {
                 for (let region in plan_) {
                     for (let school in plan_[region]) {
                         if (                            
@@ -166,6 +173,7 @@ export default {
                             } else {
                                 plan[region][school] = {v_9: 0, v_11: 1, ...plan_[region][school]}
                             }
+                            continue result
                         }
                     }
                 }
@@ -233,6 +241,27 @@ export default {
             return {
                 date__gte: new_dates[0].toISOString().slice(0, 19), date__lte: new_dates[1].toISOString().slice(0, 19)
             }
+        },
+        exportExcel() {
+            const data = []
+            for (let region of this.results) {
+                for (let school of region.schools) {
+                    const row_excel = {}
+                    row_excel[`${this.$t('Район')}`] = region.region
+                    row_excel[`${this.$t('Школа')}`] = school.school
+                    row_excel[`${this.$t('9-класс, Численнсть')}`] = school.value_9
+                    row_excel[`${this.$t('9-класс, Участвовали')}`] = school.v_9
+                    row_excel[`${this.$t('9-класс, Участвовали')}`] = school.v_9_per
+                    row_excel[`${this.$t('11-класс, Численнсть')}`] = school.value_11
+                    row_excel[`${this.$t('11-класс, Участвовали')}`] = school.v_11
+                    row_excel[`${this.$t('11-класс, Охват (%)')}`] = school.v_11_per
+                    row_excel[`${this.$t('Итог, Численнсть')}`] = school.summa
+                    row_excel[`${this.$t('Итог, Участвовали')}`] = school.sum
+                    row_excel[`${this.$t('Итог, Участвовали')}`] = school.sum_per
+                    data.push(row_excel)
+                }
+            }
+            exportFromJSON({data: data, fileName: `Школа`, exportType: exportFromJSON.types.xls})
         }
     }
 }
