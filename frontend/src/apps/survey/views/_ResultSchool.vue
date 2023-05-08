@@ -105,16 +105,19 @@ export default {
     },
     methods: {
         async change_tab(dates) {
-            let plan = await fetch("/json/schools.json")
-            plan = await plan.json()
-            delete plan["NaN"]
+            let plan_ = await fetch("/json/schools.json")
+            plan_ = await plan_.json()
+            delete plan_["NaN"]
             this.loading = true
             const results_9 = await axios.get(`/api/survey/survey-public/${this.ids[0]}/result/`, {params: {...this.dates_to_iso_dict(dates)}})
             const results_11 = await axios.get(`/api/survey/survey-public/${this.ids[1]}/result/`, {params: {...this.dates_to_iso_dict(dates)}})
-
+            const plan = {}
             for (let r of results_9.data) {
-                for (let region in plan) {
-                    for (let school in plan[region]) {
+                for (let region in plan_) {
+                    if (!plan[region]) {
+                        plan[region] = {}
+                    }
+                    for (let school in plan_[region]) {
                         if (
                             school == Object.values(r.data)[1] || 
                             school == Object.values(r.data)[1].replace("-мактаб", "") ||
@@ -130,10 +133,10 @@ export default {
                             school.replace("maktab", "") == Object.values(r.data)[1] ||
                             school.replace(" maktab", "") == Object.values(r.data)[1]
                         ) {
-                            if (plan[region][school]["v_9"]) {
+                            if (plan[region][school]) {
                                 plan[region][school]["v_9"] += 1
                             } else {
-                                plan[region][school]["v_9"] = 1
+                                plan[region][school] = {v_9: 1, v_11: 0, ...plan_[region][school]}
                             }
                         }
                     }
@@ -141,8 +144,8 @@ export default {
             }
 
             for (let r of results_11.data) {
-                for (let region in plan) {
-                    for (let school in plan[region]) {
+                for (let region in plan_) {
+                    for (let school in plan_[region]) {
                         if (                            
                             school == Object.values(r.data)[1] || 
                             school == Object.values(r.data)[1].replace("-мактаб", "") ||
