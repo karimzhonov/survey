@@ -166,6 +166,9 @@ export default {
 
             result: for (let r of results_11.data) {
                 for (let region in plan_) {
+                    if (!plan[region]) {
+                        plan[region] = {}
+                    }
                     for (let school in plan_[region]) {
                         if (                            
                             school == Object.values(r.data)[1] || 
