@@ -112,6 +112,13 @@ export default {
         await this.change_tab(this.dates)
     },
     methods: {
+        get_school(data) {
+            for (let i=2; i++; i < 14) {
+                const school = data[`вопрос${i}`]
+                if (school) return school
+            }
+            return ""
+        },
         async change_tab(dates) {
             let plan_ = await fetch("/json/schools.json")
             plan_ = await plan_.json()
@@ -127,19 +134,19 @@ export default {
                     }
                     for (let school in plan_[region]) {
                         if (
-                            school == Object.values(r.data)[1] || 
-                            school == Object.values(r.data)[1].replace("-мактаб", "") ||
-                            school == Object.values(r.data)[1].replace("мактаб", "") ||
-                            school == Object.values(r.data)[1].replace(" мактаб", "") ||
-                            school == Object.values(r.data)[1].replace("-", " ") ||
+                            school == this.get_school(r.data) || 
+                            school == this.get_school(r.data).replace("-мактаб", "") ||
+                            school == this.get_school(r.data).replace("мактаб", "") ||
+                            school == this.get_school(r.data).replace(" мактаб", "") ||
+                            school == this.get_school(r.data).replace("-", " ") ||
 
-                            school.replace("-мактаб", "") == Object.values(r.data)[1] ||
-                            school.replace("мактаб", "") == Object.values(r.data)[1] ||
-                            school.replace(" мактаб", "") == Object.values(r.data)[1] ||
+                            school.replace("-мактаб", "") == this.get_school(r.data) ||
+                            school.replace("мактаб", "") == this.get_school(r.data) ||
+                            school.replace(" мактаб", "") == this.get_school(r.data) ||
 
-                            school.replace("-maktab", "") == Object.values(r.data)[1] ||
-                            school.replace("maktab", "") == Object.values(r.data)[1] ||
-                            school.replace(" maktab", "") == Object.values(r.data)[1]
+                            school.replace("-maktab", "") == this.get_school(r.data) ||
+                            school.replace("maktab", "") == this.get_school(r.data) ||
+                            school.replace(" maktab", "") == this.get_school(r.data)
                         ) {
                             if (plan[region][school]) {
                                 plan[region][school]["v_9"] += 1
@@ -159,19 +166,19 @@ export default {
                     }
                     for (let school in plan_[region]) {
                         if (                            
-                            school == Object.values(r.data)[1] || 
-                            school == Object.values(r.data)[1].replace("-мактаб", "") ||
-                            school == Object.values(r.data)[1].replace("мактаб", "") ||
-                            school == Object.values(r.data)[1].replace(" мактаб", "") ||
-                            school == Object.values(r.data)[1].replace("-", " ") ||
+                            school == this.get_school(r.data) || 
+                            school == this.get_school(r.data).replace("-мактаб", "") ||
+                            school == this.get_school(r.data).replace("мактаб", "") ||
+                            school == this.get_school(r.data).replace(" мактаб", "") ||
+                            school == this.get_school(r.data).replace("-", " ") ||
 
-                            school.replace("-мактаб", "") == Object.values(r.data)[1] ||
-                            school.replace("мактаб", "") == Object.values(r.data)[1] ||
-                            school.replace(" мактаб", "") == Object.values(r.data)[1] ||
+                            school.replace("-мактаб", "") == this.get_school(r.data) ||
+                            school.replace("мактаб", "") == this.get_school(r.data) ||
+                            school.replace(" мактаб", "") == this.get_school(r.data) ||
 
-                            school.replace("-maktab", "") == Object.values(r.data)[1] ||
-                            school.replace("maktab", "") == Object.values(r.data)[1] ||
-                            school.replace(" maktab", "") == Object.values(r.data)[1]
+                            school.replace("-maktab", "") == this.get_school(r.data) ||
+                            school.replace("maktab", "") == this.get_school(r.data) ||
+                            school.replace(" maktab", "") == this.get_school(r.data)
                         ) {
                             if (plan[region][school]) {
                                 plan[region][school]["v_11"] += 1
@@ -301,6 +308,7 @@ export default {
             row_excel[`${this.$t('Итог, Численнсть')}`] = this.all_all.summa
             row_excel[`${this.$t('Итог, Участвовали')}`] = this.all_all.sum
             row_excel[`${this.$t('Итог, Охват (%)')}`] = this.all_all.sum_per
+            data.push(row_excel)
             exportFromJSON({data: data, fileName: `Школа`, exportType: exportFromJSON.types.xls})
         }
     }
