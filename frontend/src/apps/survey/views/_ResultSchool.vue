@@ -129,9 +129,6 @@ export default {
             const plan = {}
             result: for (let r of results_9.data) {
                 for (let region in plan_) {
-                    if (!plan[region]) {
-                        plan[region] = {}
-                    }
                     for (let school in plan_[region]) {
                         if (
                             school == this.get_school(r.data) || 
@@ -148,6 +145,9 @@ export default {
                             school.replace("maktab", "") == this.get_school(r.data) ||
                             school.replace(" maktab", "") == this.get_school(r.data)
                         ) {
+                            if (!plan[region]) {
+                                plan[region] = {}
+                            }
                             if (plan[region][school]) {
                                 plan[region][school]["v_9"] += 1
                             } else {
@@ -161,9 +161,6 @@ export default {
 
             result: for (let r of results_11.data) {
                 for (let region in plan_) {
-                    if (!plan[region]) {
-                        plan[region] = {}
-                    }
                     for (let school in plan_[region]) {
                         if (                            
                             school == this.get_school(r.data) || 
@@ -180,6 +177,9 @@ export default {
                             school.replace("maktab", "") == this.get_school(r.data) ||
                             school.replace(" maktab", "") == this.get_school(r.data)
                         ) {
+                            if (!plan[region]) {
+                                plan[region] = {}
+                            }
                             if (plan[region][school]) {
                                 plan[region][school]["v_11"] += 1
                             } else {
