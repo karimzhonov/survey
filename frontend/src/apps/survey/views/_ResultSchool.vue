@@ -24,6 +24,7 @@
         <Column field="region" :header="$t('Район')"></Column>
         <Column field="survey_count" :header="$t('Участвовали')"></Column>
         <Column field="school_count" :header="$t('Кол-во школ')"></Column>
+        <Column field="count_per" :header="$t('Кол-во школ')"></Column>
         <Column field="value_9" :header="$t('9-класс, Численость')"></Column>
         <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
         <Column field="v_9_per" :header="$t('9-класс, Охват (%)')"></Column>
@@ -39,6 +40,7 @@
                 <Column footer="Общий результат"></Column>
                 <Column :footer="all.survey_count"></Column>
                 <Column :footer="all.school_count"></Column>
+                <Column :footer="all.count_per"></Column>
                 <Column :footer="all.value_9"></Column>
                 <Column :footer="all.v_9"></Column>
                 <Column :footer="`${all.v_9_per}`"></Column>
@@ -54,6 +56,7 @@
                 <Column footer="Общий итог"></Column>
                 <Column :footer="all_all.survey_count"></Column>
                 <Column :footer="all_all.school_count"></Column>
+                <Column :footer="all_all.count_per"></Column>
                 <Column :footer="all_all.value_9"></Column>
                 <Column :footer="all_all.v_9"></Column>
                 <Column :footer="`${all_all.v_9_per}`"></Column>
@@ -220,6 +223,7 @@ export default {
                 } 
                 d.school_count = Object.keys(plan_[key]).length
                 d.survey_count = d.schools.reduce((a, v) => {a += v.v_9 + v.v_11 > 10 ? 1 : 0; return a}, 0)
+                d.count_per = `${d.survey_count ? Math.round(d.survey_count / d.school_count * 10000) / 100 : ""}%`
                 d.v_9_per = `${d.v_9 ? Math.round(d.v_9 / d.value_9 * 10000) / 100 : ""}%`
                 d.v_11_per = `${d.v_11 ? Math.round(d.v_11 / d.value_11 * 10000) / 100 : ""}%`
                 d.summa = d.value_9 + d.value_11
@@ -240,6 +244,7 @@ export default {
             all.v_11_per = `${all.v_11 ? Math.round(all.v_11 / all.value_11 * 10000) / 100 : ""}%`
             all.school_count = ordered.reduce((a, v) => {a += v.school_count; return a}, 0)
             all.survey_count = ordered.reduce((a, v) => {a += v.survey_count; return a}, 0)
+            all.count_per = `${all.survey_count ? Math.round(all.survey_count / all.school_count * 10000) / 100 : ""}%`
             all.summa = all.value_9 + all.value_11
             all.sum = (all.v_9 ? all.v_9 : 0) + (all.v_11 ? all.v_11 : 0)
             all.sum = all.sum ? all.sum : ""
@@ -247,6 +252,8 @@ export default {
             this.all = all
 
             const all_all = JSON.parse(JSON.stringify(all))
+            all_all.survey_count = Object.values(plan_).reduce((a, v) => {a += Object.keys(v).length; return a}, 0)
+            all_all.count_per = `${all_all.survey_count ? Math.round(all_all.survey_count / all_all.school_count * 10000) / 100 : ""}%`
             all_all.value_9 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_9; return aa}, 0); return a}, 0)
             all_all.value_11 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_11; return aa}, 0); return a}, 0)
             all_all.summa = all_all.value_9 + all_all.value_11
