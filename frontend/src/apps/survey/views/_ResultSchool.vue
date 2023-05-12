@@ -238,8 +238,8 @@ export default {
             }
             all.v_9_per = `${all.v_9 ? Math.round(all.v_9 / all.value_9 * 10000) / 100 : ""}%`
             all.v_11_per = `${all.v_11 ? Math.round(all.v_11 / all.value_11 * 10000) / 100 : ""}%`
-            all.school_count = all.schools.reduce((a, v) => {a += v.school_count; return a}, 0)
-            all.survey_count = all.schools.reduce((a, v) => {a += v.survey_count; return a}, 0)
+            all.school_count = ordered.reduce((a, v) => {a += v.school_count; return a}, 0)
+            all.survey_count = ordered.reduce((a, v) => {a += v.survey_count; return a}, 0)
             all.summa = all.value_9 + all.value_11
             all.sum = (all.v_9 ? all.v_9 : 0) + (all.v_11 ? all.v_11 : 0)
             all.sum = all.sum ? all.sum : ""
