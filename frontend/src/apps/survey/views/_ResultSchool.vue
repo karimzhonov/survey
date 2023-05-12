@@ -23,8 +23,8 @@
         <Column expander style="width: 5rem" />
         <Column field="region" :header="$t('Район')"></Column>
         <Column field="survey_count" :header="$t('Участвовали')"></Column>
-        <Column field="school_count" :header="$t('Школа, Охват (%)')"></Column>
-        <Column field="count_per" :header="$t('Кол-во школ')"></Column>
+        <Column field="school_count" :header="$t('Кол-во школ')"></Column>
+        <Column field="count_per" :header="$t('Школа, Охват (%)')"></Column>
         <Column field="value_9" :header="$t('9-класс, Численость')"></Column>
         <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
         <Column field="v_9_per" :header="$t('9-класс, Охват (%)')"></Column>
