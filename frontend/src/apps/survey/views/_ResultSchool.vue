@@ -23,7 +23,7 @@
         <Column expander style="width: 5rem" />
         <Column field="region" :header="$t('Район')"></Column>
         <Column field="survey_count" :header="$t('Участвовали')"></Column>
-        <Column field="school_count" :header="$t('Кол-во школ')"></Column>
+        <Column field="school_count" :header="$t('Школа, Охват (%)')"></Column>
         <Column field="count_per" :header="$t('Кол-во школ')"></Column>
         <Column field="value_9" :header="$t('9-класс, Численость')"></Column>
         <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
@@ -252,7 +252,7 @@ export default {
             this.all = all
 
             const all_all = JSON.parse(JSON.stringify(all))
-            all_all.survey_count = Object.values(plan_).reduce((a, v) => {a += Object.keys(v).length; return a}, 0)
+            all_all.school_count = Object.values(plan_).reduce((a, v) => {a += Object.keys(v).length; return a}, 0)
             all_all.count_per = `${all_all.survey_count ? Math.round(all_all.survey_count / all_all.school_count * 10000) / 100 : ""}%`
             all_all.value_9 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_9; return aa}, 0); return a}, 0)
             all_all.value_11 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_11; return aa}, 0); return a}, 0)
