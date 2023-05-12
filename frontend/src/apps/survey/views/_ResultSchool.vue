@@ -37,6 +37,8 @@
             <Row>
                 <Column></Column>
                 <Column footer="Общий результат"></Column>
+                <Column :footer="all.survey_count"></Column>
+                <Column :footer="all.school_count"></Column>
                 <Column :footer="all.value_9"></Column>
                 <Column :footer="all.v_9"></Column>
                 <Column :footer="`${all.v_9_per}`"></Column>
@@ -50,6 +52,8 @@
             <Row>
                 <Column></Column>
                 <Column footer="Общий итог"></Column>
+                <Column :footer="all_all.survey_count"></Column>
+                <Column :footer="all_all.school_count"></Column>
                 <Column :footer="all_all.value_9"></Column>
                 <Column :footer="all_all.v_9"></Column>
                 <Column :footer="`${all_all.v_9_per}`"></Column>
@@ -99,7 +103,7 @@ export default {
         let now = new Date()
         const dates = [new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59)]
         return {
-            ids: ["6c4cdd4a-92b4-43b4-8071-24aca27d9d6e", "6c4cdd4a-92b4-43b4-8071-24aca27d9d6e", "92081a10-f8f1-416e-91be-a9e5138c65bd", "203cea56-f2a7-4b9a-9ca6-f79046b84662"],
+            ids: ["92081a10-f8f1-416e-91be-a9e5138c65bd", "203cea56-f2a7-4b9a-9ca6-f79046b84662"],
             results: [],
             loading: true,
             dates,
@@ -234,6 +238,8 @@ export default {
             }
             all.v_9_per = `${all.v_9 ? Math.round(all.v_9 / all.value_9 * 10000) / 100 : ""}%`
             all.v_11_per = `${all.v_11 ? Math.round(all.v_11 / all.value_11 * 10000) / 100 : ""}%`
+            all.school_count = d.schools.reduce((a, v) => {a += v.school_count; return a}, 0)
+            all.survey_count = d.schools.reduce((a, v) => {a += v.survey_count; return a}, 0)
             all.summa = all.value_9 + all.value_11
             all.sum = (all.v_9 ? all.v_9 : 0) + (all.v_11 ? all.v_11 : 0)
             all.sum = all.sum ? all.sum : ""
