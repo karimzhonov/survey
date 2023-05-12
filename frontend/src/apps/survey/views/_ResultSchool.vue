@@ -99,7 +99,7 @@ export default {
         let now = new Date()
         const dates = [new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59)]
         return {
-            ids: ["92081a10-f8f1-416e-91be-a9e5138c65bd", "203cea56-f2a7-4b9a-9ca6-f79046b84662"],
+            ids: ["6c4cdd4a-92b4-43b4-8071-24aca27d9d6e", "6c4cdd4a-92b4-43b4-8071-24aca27d9d6e", "92081a10-f8f1-416e-91be-a9e5138c65bd", "203cea56-f2a7-4b9a-9ca6-f79046b84662"],
             results: [],
             loading: true,
             dates,
@@ -214,8 +214,8 @@ export default {
                     v_11: Object.values(plan[key]).reduce((a, v) => {a += v.v_11 ?? 0; return a}, 0),
                     value_11: Object.values(plan[key]).reduce((a, v) => {a += v.value_11 ?? 0; return a}, 0),
                 } 
-                d.school_count = plan[key].length
-                d.survey_count = d.schools.reduce((a, v) => {a += v.v_9 + v.v_1 > 10 ? 1 : 0; return a}, 0)
+                d.school_count = Object.keys(plan_[key]).length
+                d.survey_count = d.schools.reduce((a, v) => {a += v.v_9 + v.v_11 > 10 ? 1 : 0; return a}, 0)
                 d.v_9_per = `${d.v_9 ? Math.round(d.v_9 / d.value_9 * 10000) / 100 : ""}%`
                 d.v_11_per = `${d.v_11 ? Math.round(d.v_11 / d.value_11 * 10000) / 100 : ""}%`
                 d.summa = d.value_9 + d.value_11
