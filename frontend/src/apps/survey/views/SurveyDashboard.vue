@@ -54,6 +54,30 @@ const vizPanelOptions = {
 
 window.XLSX = XLSX;
 
+const result_id_page = {
+  "name": "Page Id",
+  "elements": [
+    {
+      "name": "id",
+      "type": "text",
+      "title": {
+        "ru": "Id",
+        "uz-cl": "Id"
+      },
+      "isRequired": true,
+    },
+    {
+      "name": "date",
+      "type": "text",
+      "title": {
+        "ru": "Дата и время",
+        "uz-cl": "Дата и время"
+      },
+      "isRequired": true,
+    }
+  ]
+}
+
 export default {
     name: 'SurveyDashboard',
     props: ["id"],
@@ -83,7 +107,8 @@ export default {
         async show_table_results() {
             this.surveyTable = true
             setTimeout(() => {
-                this.survey_json = this.survey.data
+                this.survey_json = JSON.parse(JSON.stringify(this.survey.data))
+                this.survey_json.pages = [result_id_page ,...this.survey_json.pages]
                 const survey = new Model(this.survey_json);
                 const visPanelTabuler = new SurveyAnalyticsTabulator.Tabulator(
                     survey, this.results, {}
@@ -144,7 +169,7 @@ export default {
             return new_result
         },
         async render(results) {
-            results = results.map((v) => {v.data.date = v.date; return v.data})
+            results = results.map((v) => {v.data.date = v.date; v.data.id = v.id; return v.data})
             this.results = results
             this.survey_json = this.survey.data
             const survey = new Model(this.survey_json);

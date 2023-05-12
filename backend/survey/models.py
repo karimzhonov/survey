@@ -32,6 +32,9 @@ class Survey(models.Model):
     class Meta:
         ordering = ["id"]
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class SurveyResult(models.Model):
     data = models.JSONField(default=dict)

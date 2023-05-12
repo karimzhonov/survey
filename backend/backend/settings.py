@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'adminsortable2',
     'jet.dashboard',
     'jet',
+    "import_export",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
