@@ -77,9 +77,21 @@
                         <InputText v-model="filters[slotProps.data.region]['global'].value" placeholder="Поиск" />
                     </span>
                 </div>
-                
-
+                <h5>Школы который ПРОШЛИ опрос</h5>
                 <DataTable :value="slotProps.data.schools" v-model:filters="filters[slotProps.data.region]" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']">
+                    <Column field="school" :header="$t('Школа')"></Column>
+                    <Column field="value_9" :header="$t('9-класс, Численость')"></Column>
+                    <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
+                    <Column field="v_9_per" :header="$t('9-класс, Охват (%)')"></Column>
+                    <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
+                    <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
+                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
+                    <Column field="summa" :header="$t('Итог, Численость')"></Column>
+                    <Column field="sum" :header="$t('Итог, Участвовали')"></Column>
+                    <Column field="sum_per" :header="$t('Итог, Охват (%)')"></Column>
+                </DataTable>
+                <h5>Школы который НЕ ПРОШЛИ опрос</h5>
+                <DataTable :value="slotProps.data.others" v-model:filters="filters[slotProps.data.region]" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']">
                     <Column field="school" :header="$t('Школа')"></Column>
                     <Column field="value_9" :header="$t('9-класс, Численость')"></Column>
                     <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
@@ -213,7 +225,9 @@ export default {
                         d.sum = (d.v_9 ? d.v_9 : 0) + (d.v_11 ? d.v_11 : 0)
                         d.sum = d.sum ? d.sum : ""
                         d.sum_per = `${d.sum ? Math.round(d.sum / d.summa * 10000) / 100 : ""}%`
-                        acc.push(d)
+                        if (d.v_9 + d.v_11 > 10) {
+                            acc.push(d)
+                        }
                         return acc
                     }, []),
                     v_9: Object.values(plan[key]).reduce((a, v) => {a += v.v_9 ?? 0; return a}, 0),
@@ -221,8 +235,19 @@ export default {
                     v_11: Object.values(plan[key]).reduce((a, v) => {a += v.v_11 ?? 0; return a}, 0),
                     value_11: Object.values(plan[key]).reduce((a, v) => {a += v.value_11 ?? 0; return a}, 0),
                 } 
+                d.others = Object.keys(plan_[key]).reduce((others, school) => {
+                    for (let s of d.schools) {
+                        if (s.school == school) return others
+                    }
+                    const dd = {
+                        "school": school, ...plan_[key][school],
+                    }
+                    dd.summa = dd.value_9 + dd.value_11
+                    others.push(dd)
+                    return others
+                }, [])
                 d.school_count = Object.keys(plan_[key]).length
-                d.survey_count = d.schools.reduce((a, v) => {a += v.v_9 + v.v_11 > 10 ? 1 : 0; return a}, 0)
+                d.survey_count = d.schools.reduce((a, v) => {a += 1; return a}, 0)
                 d.count_per = `${d.survey_count ? Math.round(d.survey_count / d.school_count * 10000) / 100 : ""}%`
                 d.v_9_per = `${d.v_9 ? Math.round(d.v_9 / d.value_9 * 10000) / 100 : ""}%`
                 d.v_11_per = `${d.v_11 ? Math.round(d.v_11 / d.value_11 * 10000) / 100 : ""}%`
