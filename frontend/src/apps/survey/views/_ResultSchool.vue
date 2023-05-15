@@ -122,7 +122,7 @@ export default {
     },
     methods: {
         get_school(data) {
-            for (let i=2; i++; i < 14) {
+            for (let i=1; i++; i < 14) {
                 const school = data[`вопрос${i}`]
                 if (school) return school
             }
