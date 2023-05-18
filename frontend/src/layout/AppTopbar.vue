@@ -147,7 +147,7 @@ export default {
       <Menubar  :model="navbar_items" style="background-color: inherit; border: none;"/>
     </div>
 
-    <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
+    <button class="p-link layout-topbar-menu-button layout-topbar-button ml-2" @click="onTopBarMenuButton()">
       <i class="pi pi-ellipsis-v"></i>
     </button>
 

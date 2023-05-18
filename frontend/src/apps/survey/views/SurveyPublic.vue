@@ -1,6 +1,6 @@
 <template>
     <div v-if="survey_active" id="surveyElement" style="display: inline-block; width: 100%;">
-      <h2 v-if="survey_response" class="survey-title">{{ survey_response.data.title ? survey_response.data.title[$i18n.locale] ?? survey_response.data.title.default : survey_response.name }}</h2>
+      <h2 v-if="survey_response" class="survey-title mb-8">{{ survey_response.data.title ? survey_response.data.title[$i18n.locale] ?? survey_response.data.title.default : survey_response.name }}</h2>
         <survey params="survey: model"></survey>
         <div v-if="ended" class="sv-action__content flex justify-content-center">
           <input @click="start_again" type="button" :value="$t('Пройти опрос еще раз')" class="sd-btn sd-btn--action sd-navigation__complete-btn" :title="$t('Тестировать еще раз')">
