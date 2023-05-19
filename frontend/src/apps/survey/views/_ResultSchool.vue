@@ -291,6 +291,9 @@ export default {
             this.all = all
 
             const all_all = JSON.parse(JSON.stringify(all))
+            all_all.school_count = 0
+            all_all.value_9 = 0
+            all_all.value_11
             for (let v of Object.values(plan_)) {
                 all_all.school_count += Object.keys(v).length
                 all_all.value_9 += v.value_9 ?? 0
