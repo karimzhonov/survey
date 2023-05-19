@@ -235,7 +235,7 @@ export default {
                     v_11: 0,
                     value_11: 0,
                 } 
-                for (let v of plan[key]) {
+                for (let v of Object.values(plan[key])) {
                     d.v_9 += v.v_9 ?? 0
                     d.value_9 += v.value_9 ?? 0
                     d.v_11 += v.v_11 ?? 0
@@ -291,7 +291,7 @@ export default {
             this.all = all
 
             const all_all = JSON.parse(JSON.stringify(all))
-            for (let v of plan_) {
+            for (let v of Object.values(plan_)) {
                 all_all.school_count += Object.keys(v).length
                 all_all.value_9 += v.value_9 ?? 0
                 all_all.value_11 += v.value_11 ?? 0
