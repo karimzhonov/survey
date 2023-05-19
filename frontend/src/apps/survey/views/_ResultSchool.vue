@@ -293,11 +293,13 @@ export default {
             const all_all = JSON.parse(JSON.stringify(all))
             all_all.school_count = 0
             all_all.value_9 = 0
-            all_all.value_11
+            all_all.value_11 = 0
             for (let v of Object.values(plan_)) {
                 all_all.school_count += Object.keys(v).length
-                all_all.value_9 += v.value_9 ?? 0
-                all_all.value_11 += v.value_11 ?? 0
+                for (let vv of Object.values(v)) {
+                    all_all.value_9 += vv.value_9 ?? 0
+                    all_all.value_11 += vv.value_11 ?? 0
+                }
             }
             all_all.count_per = `${all_all.survey_count ? Math.round(all_all.survey_count / all_all.school_count * 10000) / 100 : ""}%`
             all_all.summa = all_all.value_9 + all_all.value_11
