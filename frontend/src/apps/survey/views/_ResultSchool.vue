@@ -230,11 +230,17 @@ export default {
                         }
                         return acc
                     }, []),
-                    v_9: Object.values(plan[key]).reduce((a, v) => {a += v.v_9 ?? 0; return a}, 0),
-                    value_9: Object.values(plan[key]).reduce((a, v) => {a += v.value_9 ?? 0; return a}, 0),
-                    v_11: Object.values(plan[key]).reduce((a, v) => {a += v.v_11 ?? 0; return a}, 0),
-                    value_11: Object.values(plan[key]).reduce((a, v) => {a += v.value_11 ?? 0; return a}, 0),
+                    v_9: 0,
+                    value_9: 0,
+                    v_11: 0,
+                    value_11: 0,
                 } 
+                for (let v of plan[key]) {
+                    d.v_9 += v.v_9 ?? 0
+                    d.value_9 += v.value_9 ?? 0
+                    d.v_11 += v.v_11 ?? 0
+                    d.value_11 += v.value_11 ?? 0
+                }
                 d.others = Object.keys(plan_[key]).reduce((others, school) => {
                     for (let s of d.schools) {
                         if (s.school == school) return others
@@ -247,7 +253,7 @@ export default {
                     return others
                 }, [])
                 d.school_count = Object.keys(plan_[key]).length
-                d.survey_count = d.schools.reduce((a, v) => {a += 1; return a}, 0)
+                d.survey_count = d.schools.length
                 d.count_per = `${d.survey_count ? Math.round(d.survey_count / d.school_count * 10000) / 100 : ""}%`
                 d.v_9_per = `${d.v_9 ? Math.round(d.v_9 / d.value_9 * 10000) / 100 : ""}%`
                 d.v_11_per = `${d.v_11 ? Math.round(d.v_11 / d.value_11 * 10000) / 100 : ""}%`
@@ -260,15 +266,23 @@ export default {
             }, []);
             const all = {
                 region: "Общий итог",
-                v_9: Object.values(ordered).reduce((a, v) => {a += v.v_9 ?? 0; return a}, 0),
-                value_9: Object.values(ordered).reduce((a, v) => {a += v.value_9 ?? 0; return a}, 0),
-                v_11: Object.values(ordered).reduce((a, v) => {a += v.v_11 ?? 0; return a}, 0),
-                value_11: Object.values(ordered).reduce((a, v) => {a += v.value_11 ?? 0; return a}, 0),
+                v_9: 0,
+                value_9: 0,
+                v_11: 0,
+                value_11: 0,
+                school_count: 0,
+                survey_count: 0,
+            }
+            for (let v of ordered) {
+                all.v_9 += v.v_9 ?? 0
+                all.value_9 += v.value_9 ?? 0
+                all.v_11 += v.v_11 ?? 0
+                all.value_11 += v.value_11 ?? 0
+                all.school_count += v.school_count ?? 0
+                all.survey_count += v.survey_count ?? 0
             }
             all.v_9_per = `${all.v_9 ? Math.round(all.v_9 / all.value_9 * 10000) / 100 : ""}%`
             all.v_11_per = `${all.v_11 ? Math.round(all.v_11 / all.value_11 * 10000) / 100 : ""}%`
-            all.school_count = ordered.reduce((a, v) => {a += v.school_count; return a}, 0)
-            all.survey_count = ordered.reduce((a, v) => {a += v.survey_count; return a}, 0)
             all.count_per = `${all.survey_count ? Math.round(all.survey_count / all.school_count * 10000) / 100 : ""}%`
             all.summa = all.value_9 + all.value_11
             all.sum = (all.v_9 ? all.v_9 : 0) + (all.v_11 ? all.v_11 : 0)
@@ -277,10 +291,12 @@ export default {
             this.all = all
 
             const all_all = JSON.parse(JSON.stringify(all))
-            all_all.school_count = Object.values(plan_).reduce((a, v) => {a += Object.keys(v).length; return a}, 0)
+            for (let v of plan_) {
+                all_all.school_count += Object.keys(v).length
+                all_all.value_9 += v.value_9 ?? 0
+                all_all.value_11 += v.value_11 ?? 0
+            }
             all_all.count_per = `${all_all.survey_count ? Math.round(all_all.survey_count / all_all.school_count * 10000) / 100 : ""}%`
-            all_all.value_9 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_9; return aa}, 0); return a}, 0)
-            all_all.value_11 = Object.values(plan_).reduce((a, v)=> {a += Object.values(v).reduce((aa, vv) => {aa+= vv.value_11; return aa}, 0); return a}, 0)
             all_all.summa = all_all.value_9 + all_all.value_11
             all_all.v_9_per = `${all_all.v_9 ? Math.round(all_all.v_9 / all_all.value_9 * 10000) / 100 : ""}%`
             all_all.v_11_per = `${all_all.v_11 ? Math.round(all_all.v_11 / all_all.value_11 * 10000) / 100 : ""}%`
