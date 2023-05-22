@@ -153,6 +153,7 @@ export default {
                     for (let school in plan_[region]) {
                         if (
                             school == this.get_school(r.data) || 
+                            school == this.get_school(r.data).replace("-мактабь", "") ||
                             school == this.get_school(r.data).replace("-мактаб", "") ||
                             school == this.get_school(r.data).replace("мактаб", "") ||
                             school == this.get_school(r.data).replace(" мактаб", "") ||
@@ -186,6 +187,7 @@ export default {
                         if (                            
                             school == this.get_school(r.data) || 
                             school == this.get_school(r.data).replace("-мактаб", "") ||
+                            school == this.get_school(r.data).replace("-мактабь", "") ||
                             school == this.get_school(r.data).replace("мактаб", "") ||
                             school == this.get_school(r.data).replace(" мактаб", "") ||
                             school == this.get_school(r.data).replace("-", " ") ||
