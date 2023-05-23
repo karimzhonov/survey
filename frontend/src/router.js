@@ -9,7 +9,7 @@ const router = createRouter({
             path: '/',
             component: {
                 async mounted() {
-                    this.$router.push('/uz-cl')
+                    this.$router.push('/ru')
                 }
             },
             
