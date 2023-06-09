@@ -49,7 +49,7 @@ export default {
     },
     methods: {
       setup_locale() {
-        surveyLocalization.supportedLocales = ["ru", "uz-cl"];
+        surveyLocalization.supportedLocales = ["ru", "uz-cl", "uz"];
         surveyLocalization.localeNames = ["Русский ", "Узбекискый кирилица", "Узбекискый латиница"];
         localization.currentLocale = this.$i18n.locale
         const translations = localization.getLocale("ru");
