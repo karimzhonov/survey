@@ -9,11 +9,11 @@ const { layoutConfig, layoutState } = useLayout();
 const props = defineProps(['lang'])
 
 const lang = computed(() => {
-    if (['ru', 'uz-cl'].includes(props.lang)) {
+    if (['ru', 'uz-cl', "uz"].includes(props.lang)) {
         return props.lang
     }
     router.push({to: 'home', params: {lang: 'uz-cl'}})
-    return 'uz-cl'
+    return 'ru'
 })
 
 const containerClass = computed(() => {
