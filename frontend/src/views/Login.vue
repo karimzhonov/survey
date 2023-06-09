@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
 import store from '@/store';
 import logo_dark from "@/assets/images/Dark.png"
 import logo_light from "@/assets/images/Light (1).png"
