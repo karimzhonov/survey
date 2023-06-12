@@ -40,6 +40,7 @@ class SurveyResult(models.Model):
     data = models.JSONField(default=dict)
     survey = models.ForeignKey(Survey, models.CASCADE)
     date = models.DateTimeField(auto_now_add=True, null=True)
+    start_date = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ["id"]

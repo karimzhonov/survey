@@ -28,6 +28,7 @@ export default {
   props: ["id"],
   data() {
     return {
+      start_date: new Date(),
       survey_active: true,
       ended: false,
       survey_response: null
@@ -71,7 +72,7 @@ export default {
     async save_survey(data, options){
       try {
         const $result = new SurveyPublicResult({survey_id: this.id})
-        await $result.post({"survey": this.id, data})
+        await $result.post({"survey": this.id, data, start_date: this.start_date.toJSON()})
         this.ended = true
         options.showDataSavingSuccess()
       } catch (e) {
