@@ -5,6 +5,7 @@
         </div>
     </div>
   <div v-if="!loading">
+    <div class="flex justify-content-end"><Button @click="() => creator.saveSurveyFunc(true, true)"></Button></div>
     <div id="surveyCreator"></div>
   </div>
 </template>
@@ -32,6 +33,9 @@ const creatorOptions = {
 export default {
     name: 'SurveyDetail',
     props: ["id"],
+    data() {
+      return {creator: {}}
+    },
     async mounted() { 
         this.setup_locale()
         const survey_data = await $survey.get(this.id)
@@ -42,6 +46,7 @@ export default {
           callback(saveNo, true)
         }
         creator.render("surveyCreator");
+        this.creator = creator
         store.commit("basic", {key: 'loading', value: false})
     },
     computed: {

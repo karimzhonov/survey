@@ -17,7 +17,7 @@ import {surveyLocalization } from "survey-core"
 import { SurveyModel } from "survey-knockout-ui";
 import 'survey-core/defaultV2.min.css';
 import {Survey, SurveyPublicResult} from "@/apps/survey/models" 
-import {survey_locale_uz_cl} from "@/locale"
+import {survey_locale_uz_cl, survey_locale_uz} from "@/locale"
 import {Converter} from "showdown"
 
 surveyLocalization.locales["uz-cl"] = survey_locale_uz_cl
@@ -63,6 +63,7 @@ export default {
       surveyLocalization.currentLocale = this.$i18n.locale
       survey.locale = this.$i18n.locale
       surveyLocalization.locales["uz-cl"] = survey_locale_uz_cl
+      surveyLocalization.locales.uz = survey_locale_uz
       applyBindings({
           model: survey
       }, document.getElementById("surveyElement"));
