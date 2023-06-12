@@ -5,7 +5,7 @@
         </div>
     </div>
   <div v-if="!loading">
-    <div class="flex justify-content-end"><Button @click="() => creator.saveSurveyFunc(true, true)"></Button></div>
+    <div class="flex justify-content-end"><Button @click="() => creator.saveSurveyFunc(true, (...args) => {})"></Button></div>
     <div id="surveyCreator"></div>
   </div>
 </template>
