@@ -28,6 +28,7 @@ const creatorOptions = {
   showTranslationTab: true,
   showDefaultLanguageInPreviewTab: "all",
   showDesignerTab: true,
+  showState : true,
 };
 
 export default {
