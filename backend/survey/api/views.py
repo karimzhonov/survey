@@ -1,5 +1,7 @@
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
+from rest_framework.pagination import LimitOffsetPagination
 from django.utils import timezone
 from django.db.models import Q
 from .filters import SurveyFilter, SurveyResultFilter
@@ -35,12 +37,24 @@ class SurveyResultView(ModelViewSet):
     http_method_names = ["get", "delete"]
     serializer_class = SurveyResultSerializer
     filterset_class = SurveyResultFilter
+    pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
         qs = SurveyResult.objects.filter(survey_id=self.kwargs.get("survey_id"))
         if self.request.user.is_superuser:
             return qs
         return qs.filter(survey__user=self.request.user)
+    
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        if request.query_params.get('limit'):
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class SurveyPublicView(ReadOnlyModelViewSet):

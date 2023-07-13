@@ -42,7 +42,7 @@ const login = async () => {
         <div class="flex flex-column align-items-center justify-content-center">
             <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
                 <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
-                    <div class="text-center mb-5">
+                    <!-- <div class="text-center mb-5">
                         <img v-if="!darkMode" style="height: 44px;" :src="logoRpatm" alt="logo-2" class="mb-3 mr-3"/>
                         <img v-if="darkMode" style="height: 55px;" :src="logoRpatm" alt="logo-2" class="mb-3 mr-3"/>
                         <img :src="logoUrl" alt="Image" height="50" class="mb-3 mr-3"/>
@@ -56,7 +56,7 @@ const login = async () => {
                         </svg>
                         <img v-if="darkMode" :src="logo_panel" alt="logo-1"/>
                         <div class="text-900 text-3xl font-medium mb-3">{{ $t('Авторизация') }}</div>
-                    </div>
+                    </div> -->
 
                     <form @submit.prevent="login">
                         <div class="field">
