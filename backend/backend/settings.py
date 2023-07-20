@@ -246,7 +246,7 @@ REDIS_PORT = '6379'
 LOG_VIEWER_FILES_DIR = BASE_DIR / 'logs'
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'RPATM',
+    'TITLE': 'Опросник',
     'DESCRIPTION': 'Raqamli poytaxt axborat taxlil markazi',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,

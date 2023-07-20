@@ -3,8 +3,8 @@ from django.contrib import admin
 
 from .models import Period
 
-admin.site.site_title = 'RPATM'
-admin.site.site_header = 'RPATM'
+admin.site.site_title = 'Опросник'
+admin.site.site_header = 'Опросник'
 admin.site.index_title = 'Dashboard'
 admin.site.site_url = '/'
 
