@@ -25,9 +25,9 @@
         <Column field="survey_count" :header="$t('Участвовали')"></Column>
         <Column field="school_count" :header="$t('Кол-во школ')"></Column>
         <Column field="count_per" :header="$t('Школа, Охват (%)')"></Column>
-        <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
-        <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
-        <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
+        <Column field="value_9" :header="$t('9 класс, Численость')"></Column>
+        <Column field="v_9" :header="$t('9 класс, Участвовали')"></Column>
+        <Column field="v_9_per" :header="$t('9 класс, Охват (%)')"></Column>
         <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
         <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
         <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
@@ -80,9 +80,9 @@
                 <h5>Школы который ПРОШЛИ опрос</h5>
                 <DataTable :value="slotProps.data.schools" v-model:filters="filters[slotProps.data.region]" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']">
                     <Column field="school" :header="$t('Школа')"></Column>
-                    <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
-                    <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
-                    <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
+                    <Column field="value_9" :header="$t('9 класс, Численость')"></Column>
+                    <Column field="v_9" :header="$t('9 класс, Участвовали')"></Column>
+                    <Column field="v_9_per" :header="$t('9 класс, Охват (%)')"></Column>
                     <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
                     <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
                     <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
@@ -93,9 +93,9 @@
                 <h5>Школы который НЕ ПРОШЛИ опрос</h5>
                 <DataTable :value="slotProps.data.others" v-model:filters="filters[slotProps.data.region]" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']">
                     <Column field="school" :header="$t('Школа')"></Column>
-                    <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
-                    <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
-                    <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
+                    <Column field="value_9" :header="$t('9 класс, Численость')"></Column>
+                    <Column field="v_9" :header="$t('9 класс, Участвовали')"></Column>
+                    <Column field="v_9_per" :header="$t('9 класс, Охват (%)')"></Column>
                     <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
                     <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
                     <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
