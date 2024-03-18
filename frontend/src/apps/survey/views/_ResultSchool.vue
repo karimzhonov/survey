@@ -25,12 +25,12 @@
         <Column field="survey_count" :header="$t('Участвовали')"></Column>
         <Column field="school_count" :header="$t('Кол-во школ')"></Column>
         <Column field="count_per" :header="$t('Школа, Охват (%)')"></Column>
-        <Column field="value_9" :header="$t('9-класс, Численость')"></Column>
-        <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
-        <Column field="v_9_per" :header="$t('9-класс, Охват (%)')"></Column>
-        <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
+        <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
+        <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
+        <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
+        <!-- <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
         <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
-        <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
+        <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column> -->
         <Column field="summa" :header="$t('Итог, Численость')"></Column>
         <Column field="sum" :header="$t('Итог, Участвовали')"></Column>
         <Column field="sum_per" :header="$t('Итог, Охват (%)')"></Column>
@@ -44,9 +44,9 @@
                 <Column :footer="all.value_9"></Column>
                 <Column :footer="all.v_9"></Column>
                 <Column :footer="`${all.v_9_per}`"></Column>
-                <Column :footer="all.value_11"></Column>
+                <!-- <Column :footer="all.value_11"></Column>
                 <Column :footer="all.v_11"></Column>
-                <Column :footer="`${all.v_11_per}`"></Column>
+                <Column :footer="`${all.v_11_per}`"></Column> -->
                 <Column :footer="all.summa"></Column>
                 <Column :footer="all.sum"></Column>
                 <Column :footer="`${all.sum_per}`"></Column>
@@ -60,9 +60,9 @@
                 <Column :footer="all_all.value_9"></Column>
                 <Column :footer="all_all.v_9"></Column>
                 <Column :footer="`${all_all.v_9_per}`"></Column>
-                <Column :footer="all_all.value_11"></Column>
+                <!-- <Column :footer="all_all.value_11"></Column>
                 <Column :footer="all_all.v_11"></Column>
-                <Column :footer="`${all_all.v_11_per}`"></Column>
+                <Column :footer="`${all_all.v_11_per}`"></Column> -->
                 <Column :footer="all_all.summa"></Column>
                 <Column :footer="all_all.sum"></Column>
                 <Column :footer="`${all_all.sum_per}`"></Column>
@@ -80,12 +80,12 @@
                 <h5>Школы который ПРОШЛИ опрос</h5>
                 <DataTable :value="slotProps.data.schools" v-model:filters="filters[slotProps.data.region]" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']">
                     <Column field="school" :header="$t('Школа')"></Column>
-                    <Column field="value_9" :header="$t('9-класс, Численость')"></Column>
-                    <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
-                    <Column field="v_9_per" :header="$t('9-класс, Охват (%)')"></Column>
-                    <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
+                    <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
+                    <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
+                    <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
+                    <!-- <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
                     <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
-                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
+                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column> -->
                     <Column field="summa" :header="$t('Итог, Численость')"></Column>
                     <Column field="sum" :header="$t('Итог, Участвовали')"></Column>
                     <Column field="sum_per" :header="$t('Итог, Охват (%)')"></Column>
@@ -93,12 +93,12 @@
                 <h5>Школы который НЕ ПРОШЛИ опрос</h5>
                 <DataTable :value="slotProps.data.others" v-model:filters="filters[slotProps.data.region]" showGridlines responsiveLayout="scroll" :globalFilterFields="['school']">
                     <Column field="school" :header="$t('Школа')"></Column>
-                    <Column field="value_9" :header="$t('9-класс, Численость')"></Column>
-                    <Column field="v_9" :header="$t('9-класс, Участвовали')"></Column>
-                    <Column field="v_9_per" :header="$t('9-класс, Охват (%)')"></Column>
-                    <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
+                    <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
+                    <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
+                    <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
+                    <!-- <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
                     <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
-                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
+                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column> -->
                     <Column field="summa" :header="$t('Итог, Численость')"></Column>
                     <Column field="sum" :header="$t('Итог, Участвовали')"></Column>
                     <Column field="sum_per" :header="$t('Итог, Охват (%)')"></Column>
@@ -118,7 +118,7 @@ export default {
         let now = new Date()
         const dates = [new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0), new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59)]
         return {
-            ids: ["92081a10-f8f1-416e-91be-a9e5138c65bd", "203cea56-f2a7-4b9a-9ca6-f79046b84662"],
+            ids: ["cb091dc7-0b9f-402a-99fd-a717666f1596"],
             results: [],
             loading: true,
             dates,
@@ -146,7 +146,6 @@ export default {
             delete plan_["NaN"]
             this.loading = true
             const results_9 = await axios.get(`/api/survey/survey-public/${this.ids[0]}/result/`, {params: {...this.dates_to_iso_dict(dates)}})
-            const results_11 = await axios.get(`/api/survey/survey-public/${this.ids[1]}/result/`, {params: {...this.dates_to_iso_dict(dates)}})
             const plan = {}
             result: for (let r of results_9.data) {
                 for (let region in plan_) {
@@ -181,38 +180,6 @@ export default {
                 }
             }
 
-            result: for (let r of results_11.data) {
-                for (let region in plan_) {
-                    for (let school in plan_[region]) {
-                        if (                            
-                            school == this.get_school(r.data) || 
-                            school == this.get_school(r.data).replace("-мактаб", "") ||
-                            school == this.get_school(r.data).replace("-мактабь", "") ||
-                            school == this.get_school(r.data).replace("мактаб", "") ||
-                            school == this.get_school(r.data).replace(" мактаб", "") ||
-                            school == this.get_school(r.data).replace("-", " ") ||
-
-                            school.replace("-мактаб", "") == this.get_school(r.data) ||
-                            school.replace("мактаб", "") == this.get_school(r.data) ||
-                            school.replace(" мактаб", "") == this.get_school(r.data) ||
-
-                            school.replace("-maktab", "") == this.get_school(r.data) ||
-                            school.replace("maktab", "") == this.get_school(r.data) ||
-                            school.replace(" maktab", "") == this.get_school(r.data)
-                        ) {
-                            if (!plan[region]) {
-                                plan[region] = {}
-                            }
-                            if (plan[region][school]) {
-                                plan[region][school]["v_11"] += 1
-                            } else {
-                                plan[region][school] = {v_9: 0, v_11: 1, ...plan_[region][school]}
-                            }
-                            continue result
-                        }
-                    }
-                }
-            }
             const ordered = Object.keys(plan).sort().reduce((obj, key) => { 
                 this.filters[key] = {global: { value: null, matchMode: FilterMatchMode.CONTAINS }}
                 const d = {
