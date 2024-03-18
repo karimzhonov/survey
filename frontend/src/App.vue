@@ -37,7 +37,7 @@ export default {
 <template>
     <Message class="position-absolute" style="left: 15%; right: 15%; z-index: 2000;"  v-for="msg of messages" :severity="msg.severity" :key="msg.content"
            :closable="msg.closable" :icon="msg.icon" :sticky="false"><p style="color: #000">{{ msg.content }}</p></Message>
-    <div v-if="!$route.path.startsWith('/frame')" class="p-message-success text-center test-item">{{ $t('Сайт работает в тестовом режиме, приносим извинения за возможные неудобства') }}</div>
+    <!-- <div v-if="!$route.path.startsWith('/frame')" class="p-message-success text-center test-item">{{ $t('Сайт работает в тестовом режиме, приносим извинения за возможные неудобства') }}</div> -->
     <router-view />
 </template>
 
