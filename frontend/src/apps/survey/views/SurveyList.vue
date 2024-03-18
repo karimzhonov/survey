@@ -124,7 +124,7 @@ export default {
             selectedSurveys: [],
             deleteSurveysDialog: false,
             surveyDiolog: false,
-            filters: {global: { value: "active", matchMode: FilterMatchMode.CONTAINS },},
+            filters: {global: { value: null, matchMode: FilterMatchMode.CONTAINS },},
             status_color: {
                 "draft": "#828282",
                 "active": "#4ec775",
