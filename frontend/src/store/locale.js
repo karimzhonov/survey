@@ -8,6 +8,9 @@ export default {
         {
           lang: 'O\'zbekcha', code: 'uz'
         },
+        {
+          lang: 'Ўзбекча', code: 'uz-cl'
+        }
       ],
   },
   mutations: {

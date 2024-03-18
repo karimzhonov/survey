@@ -134,7 +134,7 @@ export default {
                 "draft", "active", "pause", "finished"
             ],
             tabs: [
-                "all", "draft", "active", "pause", "finished", "closed"
+                "active", "pause", "finished", "closed", "draft", "all",
             ]
         }
     },
