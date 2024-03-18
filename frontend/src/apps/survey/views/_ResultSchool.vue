@@ -28,9 +28,9 @@
         <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
         <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
         <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
-        <!-- <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
+        <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
         <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
-        <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column> -->
+        <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
         <Column field="summa" :header="$t('Итог, Численость')"></Column>
         <Column field="sum" :header="$t('Итог, Участвовали')"></Column>
         <Column field="sum_per" :header="$t('Итог, Охват (%)')"></Column>
@@ -44,9 +44,9 @@
                 <Column :footer="all.value_9"></Column>
                 <Column :footer="all.v_9"></Column>
                 <Column :footer="`${all.v_9_per}`"></Column>
-                <!-- <Column :footer="all.value_11"></Column>
+                <Column :footer="all.value_11"></Column>
                 <Column :footer="all.v_11"></Column>
-                <Column :footer="`${all.v_11_per}`"></Column> -->
+                <Column :footer="`${all.v_11_per}`"></Column>
                 <Column :footer="all.summa"></Column>
                 <Column :footer="all.sum"></Column>
                 <Column :footer="`${all.sum_per}`"></Column>
@@ -60,9 +60,9 @@
                 <Column :footer="all_all.value_9"></Column>
                 <Column :footer="all_all.v_9"></Column>
                 <Column :footer="`${all_all.v_9_per}`"></Column>
-                <!-- <Column :footer="all_all.value_11"></Column>
+                <Column :footer="all_all.value_11"></Column>
                 <Column :footer="all_all.v_11"></Column>
-                <Column :footer="`${all_all.v_11_per}`"></Column> -->
+                <Column :footer="`${all_all.v_11_per}`"></Column>
                 <Column :footer="all_all.summa"></Column>
                 <Column :footer="all_all.sum"></Column>
                 <Column :footer="`${all_all.sum_per}`"></Column>
@@ -83,9 +83,9 @@
                     <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
                     <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
                     <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
-                    <!-- <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
+                    <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
                     <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
-                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column> -->
+                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
                     <Column field="summa" :header="$t('Итог, Численость')"></Column>
                     <Column field="sum" :header="$t('Итог, Участвовали')"></Column>
                     <Column field="sum_per" :header="$t('Итог, Охват (%)')"></Column>
@@ -96,9 +96,9 @@
                     <Column field="value_9" :header="$t('9-11 класс, Численость')"></Column>
                     <Column field="v_9" :header="$t('9-11 класс, Участвовали')"></Column>
                     <Column field="v_9_per" :header="$t('9-11 класс, Охват (%)')"></Column>
-                    <!-- <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
+                    <Column field="value_11" :header="$t('11-класс, Численость')"></Column>
                     <Column field="v_11" :header="$t('11-класс, Участвовали')"></Column>
-                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column> -->
+                    <Column field="v_11_per" :header="$t('11-класс, Охват (%)')"></Column>
                     <Column field="summa" :header="$t('Итог, Численость')"></Column>
                     <Column field="sum" :header="$t('Итог, Участвовали')"></Column>
                     <Column field="sum_per" :header="$t('Итог, Охват (%)')"></Column>
@@ -170,9 +170,11 @@ export default {
                                 plan[region] = {}
                             }
                             if (plan[region][school]) {
-                                plan[region][school]["v_9"] += 1
+                                plan[region][school]["v_9"] += r.data["вопрос16"] == "9" ? 1 : 0
+                                plan[region][school]["v_11"] += r.data["вопрос16"] == "11" ? 1 : 0
+
                             } else {
-                                plan[region][school] = {v_9: 1, v_11: 0, ...plan_[region][school]}
+                                plan[region][school] = {v_9: r.data["вопрос16"] == "9" ? 1 : 0, v_11: r.data["вопрос16"] == "11" ? 1 : 0, ...plan_[region][school]}
                             }
                             continue result
                         }
