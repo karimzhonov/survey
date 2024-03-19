@@ -130,8 +130,9 @@ export default {
   display: none;
 }
 
-.sv_window_content {
-  overflow-y: scroll !important;
+.sd-container-modern {
+    margin-bottom: calc(10 * var(--base-unit, 8px));
+    overflow-y: scroll !important;
+    height: 90vh;
 }
-
 </style>
