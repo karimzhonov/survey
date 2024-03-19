@@ -130,4 +130,8 @@ export default {
   display: none;
 }
 
+.sv_window_content {
+  overflow-y: scroll !important;
+}
+
 </style>
