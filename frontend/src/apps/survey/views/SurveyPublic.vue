@@ -133,6 +133,6 @@ export default {
 .sd-container-modern {
     margin-bottom: calc(10 * var(--base-unit, 8px));
     overflow-y: scroll !important;
-    height: 90vh;
+    max-height: 90vh;
 }
 </style>
