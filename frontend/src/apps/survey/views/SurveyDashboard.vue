@@ -74,6 +74,15 @@ const result_id_page = {
         "uz-cl": "Дата и время"
       },
       "isRequired": true,
+    },
+    {
+      "name": "start_date",
+      "type": "text",
+      "title": {
+        "ru": "Дата и время начало",
+        "uz-cl": "Дата и время начало"
+      },
+      "isRequired": true,
     }
   ]
 }
