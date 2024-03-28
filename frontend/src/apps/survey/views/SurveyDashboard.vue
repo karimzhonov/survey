@@ -178,7 +178,7 @@ export default {
             return new_result
         },
         async render(results) {
-            results = results.map((v) => {v.data.date = v.date; v.data.id = v.id; return v.data})
+            results = results.map((v) => {v.data.date = v.date; v.data.id = v.id; v.data.start_date = v.start_date; return v.data})
             this.results = results
             this.survey_json = this.survey.data
             const survey = new Model(this.survey_json);
