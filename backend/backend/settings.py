@@ -320,7 +320,7 @@ CKEDITOR_CONFIGS = {
 }
 
 
-CSRF_TRUSTED_ORIGINS = ["https://www.ichd.tashkent.uz", "https://ichd.tashkent.uz", "http://www.ichd.tashkent.local", "http://ichd.tashkent.local"]
+CSRF_TRUSTED_ORIGINS = ["https://www.survey.tashkent.uz", "https://survey.tashkent.uz", "http://www.survey.tashkent.local", "http://survey.tashkent.local"]
 
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')

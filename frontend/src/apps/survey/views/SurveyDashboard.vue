@@ -67,15 +67,6 @@ const result_id_page = {
       "isRequired": true,
     },
     {
-      "name": "date",
-      "type": "text",
-      "title": {
-        "ru": "Дата и время",
-        "uz-cl": "Дата и время"
-      },
-      "isRequired": true,
-    },
-    {
       "name": "start_date",
       "type": "text",
       "title": {
@@ -83,10 +74,19 @@ const result_id_page = {
         "uz-cl": "Дата и время начало"
       },
       "isRequired": true,
+    },
+    {
+      "name": "date",
+      "type": "text",
+      "title": {
+        "ru": "Дата и время",
+        "uz-cl": "Дата и время"
+      },
+      "isRequired": true,
     }
   ]
 }
-
+  
 export default {
     name: 'SurveyDashboard',
     props: ["id"],
